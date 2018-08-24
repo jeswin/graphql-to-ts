@@ -1,2 +1,2 @@
 # graphql-to-ts
-Auto-generate TypeScript code from GraphQL Schema Information
+Generate TypeScript files from GraphQL Schemas
