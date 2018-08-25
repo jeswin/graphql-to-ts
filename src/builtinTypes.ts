@@ -19,5 +19,5 @@ function getBasicTSType(type: any) {
         ? "boolean"
         : type === "ID"
           ? "string"
-          : type;
+          : `I${type}`;
 }

@@ -7,8 +7,30 @@ import { generateEnumType } from "./typeDefinitions/enum";
 import { generateInputObjectType } from "./typeDefinitions/input";
 import { IGQLDocument } from "./types";
 
-export function generateTypes(typeDefs: string): any {
-  const nodes: IGQLDocument = gql([typeDefs]);
+export function generateTypes(schema: string): any {
+  const gqlDoc: IGQLDocument = gql([schema]);
+
+  return gqlDoc.kind === "Document"
+    ? prettier.format(
+        gqlDoc.definitions.reduce(
+          (acc: string, def: any) =>
+            acc +
+            (def.kind === "ObjectTypeDefinition"
+              ? generateObjectType(def)
+              : def.kind === "EnumTypeDefinition"
+                ? generateEnumType(def)
+                : def.kind === "InputObjectTypeDefinition"
+                  ? generateInputObjectType(def)
+                  : ""),
+          ""
+        ),
+        { parser: "typescript" }
+      )
+    : exception("Invalid graphql schema. Try validating first.");
+}
+
+export function generateResolvers(schema: string): any {
+  const nodes: IGQLDocument = gql([schema]);
 
   return nodes.kind === "Document"
     ? prettier.format(
