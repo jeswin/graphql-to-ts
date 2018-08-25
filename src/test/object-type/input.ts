@@ -1,5 +1,5 @@
 export default `
-type ScuttlespaceUserDTO {
+type ScuttlespaceUser {
   about: String
   domain: String
   enabled: Boolean!

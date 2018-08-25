@@ -1,12 +1,12 @@
 export default `
-type ScuttlespaceUserDTO {
-  about: String
-  domain: String
-  enabled: Boolean!
-  externalId: String!
-  pub: String!
-  rowid: ID!
-  username: String!
-  permissions: [PermissionDTO]
+export interface IScuttlespaceUser {
+  about?: string | null;
+  domain?: string | null;
+  enabled: boolean;
+  externalId: string;
+  pub: string;
+  rowid: string;
+  username: string;
+  permissions?: [PermissionDTO | null] | null;
 }
 `;

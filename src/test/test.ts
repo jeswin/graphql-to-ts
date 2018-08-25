@@ -24,8 +24,9 @@ enum Methods {
 }
 
 const testsList: ([string, string, Methods] | TestDef)[] = [
-  ["Generates Object Types", "object-type", Methods.ToTypeDef],
-  ["Generates Enum", "enum", Methods.ToTypeDef]
+  ["Generates type", "object-type", Methods.ToTypeDef],
+  ["Generates enum", "enum", Methods.ToTypeDef],
+  ["Generates input", "input", Methods.ToTypeDef]
 ];
 
 const tests = testsList.map(x => toTestDef(x));
@@ -35,10 +36,10 @@ describe("graphql-to-ts", () => {
     switch (t.method) {
       case Methods.ToTypeDef: {
         it(t.name, () => {
-          const input = require(`./${t.dir}/input`).default.trim();
+          const input = require(`./${t.dir}/input`).default;
           const expected = require(`./${t.dir}/expected`).default.trim();
-          const output = lib.generateTypeDefinitions(input);
-          console.log(output);
+          const output = lib.generateTypes(input);
+          output.should.equal(expected + "\n"); //prettier adds a \n
         });
       }
     }
