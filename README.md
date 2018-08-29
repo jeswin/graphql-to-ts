@@ -25,6 +25,7 @@ const graphqlTypes = `
 const typescriptTypes = codegen.generateTypes(graphqlTypes)
 
 /*
+Prints:
 export interface IScuttleSpaceUser {
   about?: string | null;
   rowid: string;

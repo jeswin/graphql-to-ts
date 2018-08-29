@@ -42,3 +42,23 @@ export interface IGQLDocument {
   kind: "Document";
   definitions: IGQLNamedNode[];
 }
+
+export interface ITSField {
+  name: string;
+  type: string;
+}
+
+export interface ITSInterfaceDefinition {
+  name: string;
+  fields: ITSField[];
+}
+
+export interface ITSEnumDefinition {
+  name: string;
+  values: string[];
+}
+
+export interface ITSTypes {
+  enums: ITSEnumDefinition[];
+  interfaces: ITSInterfaceDefinition[];
+}
