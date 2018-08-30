@@ -2,6 +2,7 @@ import "mocha";
 import "should";
 
 import * as lib from "../";
+import { inspect } from "util";
 
 type TestDef = {
   name: string;
@@ -29,15 +30,14 @@ function runTests(parentDir: string, tests: TestDef[]) {
   tests.forEach(t => {
     it(t.name, () => {
       const input = require(`./${parentDir}/${t.dir}/input`).default;
-      const expected = require(`./${parentDir}/${
-        t.dir
-      }/expected`).default.trim();
-      const output = lib.generateTypes(input);
-      output.should.equal(expected + "\n"); //prettier adds a \n
+      const expected = require(`./${parentDir}/${t.dir}/expected`).default;
+      const output = lib.getTypes(input);
+      output.should.deepEqual(expected);
     });
   });
 }
 
 describe("generateTypes", () => {
   runTests("generateTypes", generateTypesTests);
+  //runTests("generateQueries", generateTypesTests);
 });

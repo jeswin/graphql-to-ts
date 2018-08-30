@@ -1,5 +1,9 @@
-export default `
-export interface IChangeUserStatusArgs {
-  externalId: string;
-}
-`;
+export default {
+  interfaces: [
+    {
+      name: "IChangeUserStatusArgs",
+      fields: [{ name: "externalId", type: "string" }]
+    }
+  ],
+  enums: []
+};

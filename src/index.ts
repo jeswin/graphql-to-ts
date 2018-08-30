@@ -73,3 +73,8 @@ export function generateTypes(schema: string) {
     { parser: "typescript" }
   );
 }
+
+export function generateQuery(schema: string) {
+  const gqlDoc: IGQLDocument = gql([schema]);
+  console.log(gqlDoc);
+}

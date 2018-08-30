@@ -1,11 +1,19 @@
-export default `
-export interface ILocation {
-  id?: string | null;
-  name?: string | null;
-}
-
-export interface IHotel {
-  name?: string | null;
-  location?: ILocation | null;
-}
-`;
+export default {
+  interfaces: [
+    {
+      name: "ILocation",
+      fields: [
+        { name: "id?", type: "string | null" },
+        { name: "name?", type: "string | null" }
+      ]
+    },
+    {
+      name: "IHotel",
+      fields: [
+        { name: "name?", type: "string | null" },
+        { name: "location?", type: "ILocation | null" }
+      ]
+    }
+  ],
+  enums: []
+};
