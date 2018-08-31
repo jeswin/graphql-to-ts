@@ -48,12 +48,16 @@ export interface ITSField {
   type: string;
 }
 
-export interface ITSInterfaceDefinition {
+export interface ITSTypeEntry {
+  index: number;
+}
+
+export interface ITSInterfaceDefinition extends ITSTypeEntry {
   name: string;
   fields: ITSField[];
 }
 
-export interface ITSEnumDefinition {
+export interface ITSEnumDefinition extends ITSTypeEntry {
   name: string;
   values: string[];
 }

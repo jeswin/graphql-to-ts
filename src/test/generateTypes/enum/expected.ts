@@ -3,7 +3,8 @@ export default {
   enums: [
     {
       name: "UserStatusEnum",
-      values: ["AVAILABLE", "TAKEN", "OWN"]
+      values: ["AVAILABLE", "TAKEN", "OWN"],
+      index: 0
     }
   ]
 };

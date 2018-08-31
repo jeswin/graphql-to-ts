@@ -11,7 +11,8 @@ export default {
         { name: "rowid", type: "string" },
         { name: "username", type: "string" },
         { name: "permissions?", type: "[IPermissionDTO | null] | null" }
-      ]
+      ],
+      index: 0
     }
   ],
   enums: []

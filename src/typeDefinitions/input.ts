@@ -6,7 +6,8 @@ import {
 import { toTSType } from "../builtinTypes";
 
 export function getInputObjectType(
-  def: IGQLInputObjectTypeDefinitionNode
+  def: IGQLInputObjectTypeDefinitionNode,
+  index: number
 ): ITSInterfaceDefinition {
   return {
     name: `I${def.name.value}`,
@@ -21,6 +22,7 @@ export function getInputObjectType(
             };
           })()
         : exception(`Unknown graphql node with kind ${field.kind}.`);
-    })
+    }),
+    index
   };
 }

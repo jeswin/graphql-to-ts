@@ -17,21 +17,23 @@ export function getTypes(schema: string): ITSTypes {
 
   return gqlDoc.kind === "Document"
     ? gqlDoc.definitions.reduce(
-        (acc: ITSTypes, def: any) =>
+        (acc: ITSTypes, def: any, i: number) =>
           def.kind === "ObjectTypeDefinition"
             ? {
                 ...acc,
-                interfaces: acc.interfaces.concat(getObjectType(def))
+                interfaces: acc.interfaces.concat(getObjectType(def, i))
               }
             : def.kind === "EnumTypeDefinition"
               ? {
                   ...acc,
-                  enums: acc.enums.concat(getEnumType(def))
+                  enums: acc.enums.concat(getEnumType(def, i))
                 }
               : def.kind === "InputObjectTypeDefinition"
                 ? {
                     ...acc,
-                    interfaces: acc.interfaces.concat(getInputObjectType(def))
+                    interfaces: acc.interfaces.concat(
+                      getInputObjectType(def, i)
+                    )
                   }
                 : acc,
         { interfaces: [], enums: [] }

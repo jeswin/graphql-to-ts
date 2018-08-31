@@ -3,7 +3,8 @@ import { IGQLObjectTypeDefinitionNode, ITSInterfaceDefinition } from "../types";
 import { toTSType } from "../builtinTypes";
 
 export function getObjectType(
-  def: IGQLObjectTypeDefinitionNode
+  def: IGQLObjectTypeDefinitionNode,
+  index: number
 ): ITSInterfaceDefinition {
   return {
     name: `I${def.name.value}`,
@@ -18,6 +19,7 @@ export function getObjectType(
             };
           })()
         : exception(`Unknown graphql node with kind ${field.kind}.`);
-    })
+    }),
+    index
   };
 }
