@@ -11,6 +11,7 @@ export interface IGQLNamedNode {
 export interface IGQLFieldDefinitionNode extends IGQLNamedNode {
   kind: "FieldDefinition";
   type: any;
+  arguments?: IGQLInputValueDefinitionNode[];
 }
 
 export interface IGQLObjectTypeDefinitionNode extends IGQLNamedNode {
@@ -43,8 +44,14 @@ export interface IGQLDocument {
   definitions: IGQLNamedNode[];
 }
 
+export interface ITSInputValue {
+  name: string;
+  type: string;
+}
+
 export interface ITSField {
   name: string;
+  arguments?: ITSInputValue[];
   type: string;
 }
 

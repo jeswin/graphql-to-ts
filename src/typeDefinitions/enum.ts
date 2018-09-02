@@ -1,6 +1,6 @@
 import { IEnumTypeDefinitionNode, ITSEnumDefinition } from "../types";
 
-export function getEnumType(
+export default function getEnumType(
   def: IEnumTypeDefinitionNode,
   index: number
 ): ITSEnumDefinition {

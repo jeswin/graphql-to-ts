@@ -13,6 +13,22 @@ export default {
         { name: "permissions?", type: "[IPermissionDTO | null] | null" }
       ],
       index: 0
+    },
+    {
+      fields: [
+        {
+          arguments: [
+            {
+              name: "id?",
+              type: "string | null"
+            }
+          ],
+          name: "user",
+          type: "string"
+        }
+      ],
+      index: 1,
+      name: "IQuery"
     }
   ],
   enums: []

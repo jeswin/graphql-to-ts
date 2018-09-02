@@ -23,21 +23,18 @@ const generateTypesTests = ([
   ["enum", "enum"],
   ["input", "input"],
   ["types given mixed schema", "genTypesWithMixedSchema"],
-  ["complex types", "complexTypes"]
+  ["complex types", "complexTypes"],
+  ["query", "query"],
+  ["mutation", "mutation"],
 ] as [string, string][]).map(x => toTestDef(x));
 
-function runTests(parentDir: string, tests: TestDef[]) {
-  tests.forEach(t => {
+describe("generateTypes", () => {
+  generateTypesTests.forEach(t => {
     it(t.name, () => {
-      const input = require(`./${parentDir}/${t.dir}/input`).default;
-      const expected = require(`./${parentDir}/${t.dir}/expected`).default;
+      const input = require(`./generateTypes/${t.dir}/input`).default;
+      const expected = require(`./generateTypes/${t.dir}/expected`).default;
       const output = lib.getTypes(input);
       output.should.deepEqual(expected);
     });
   });
-}
-
-describe("generateTypes", () => {
-  runTests("generateTypes", generateTypesTests);
-  //runTests("generateQueries", generateTypesTests);
 });

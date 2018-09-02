@@ -2,9 +2,9 @@ import prettier = require("prettier");
 import gql from "graphql-tag";
 import { inspect, isNull, log } from "util";
 import exception from "./exception";
-import { getObjectType } from "./typeDefinitions/objectType";
-import { getEnumType } from "./typeDefinitions/enum";
-import { getInputObjectType } from "./typeDefinitions/input";
+import getObjectType from "./typeDefinitions/objectType";
+import getEnumType from "./typeDefinitions/enum";
+import getInputObjectType from "./typeDefinitions/input";
 import {
   IGQLDocument,
   ITSInterfaceDefinition,
@@ -18,7 +18,8 @@ export function getTypes(schema: string): ITSTypes {
   return gqlDoc.kind === "Document"
     ? gqlDoc.definitions.reduce(
         (acc: ITSTypes, def: any, i: number) =>
-          def.kind === "ObjectTypeDefinition"
+          def.kind === "ObjectTypeDefinition" ||
+          def.kind === "ObjectTypeExtension"
             ? {
                 ...acc,
                 interfaces: acc.interfaces.concat(getObjectType(def, i))
@@ -74,9 +75,4 @@ export function generateTypes(schema: string) {
   `,
     { parser: "typescript" }
   );
-}
-
-export function generateQuery(schema: string) {
-  const gqlDoc: IGQLDocument = gql([schema]);
-  console.log(gqlDoc);
 }

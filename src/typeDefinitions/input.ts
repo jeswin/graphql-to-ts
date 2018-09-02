@@ -5,7 +5,7 @@ import {
 } from "../types";
 import { toTSType } from "../builtinTypes";
 
-export function getInputObjectType(
+export default function getInputObjectType(
   def: IGQLInputObjectTypeDefinitionNode,
   index: number
 ): ITSInterfaceDefinition {
