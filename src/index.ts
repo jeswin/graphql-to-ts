@@ -41,38 +41,3 @@ export function getTypes(schema: string): ITSTypes {
       )
     : exception("Invalid graphql schema. Try validating first.");
 }
-
-function generateEnums(enums: ITSEnumDefinition[]) {
-  return enums.map(
-    e => `
-    export enum ${e.name} {
-      ${e.values.join(",")}
-    }
-  `
-  );
-}
-
-function generateInterfaces(interfaces: ITSInterfaceDefinition[]) {
-  return interfaces
-    .map(
-      i => `
-    export interface ${i.name} {
-      ${i.fields.map(f => `${f.name}: ${f.type};`).join("")}
-    }
-  `
-    )
-    .join("");
-}
-
-export function generateTypes(schema: string) {
-  const gqlDoc: IGQLDocument = gql([schema]);
-
-  const types = getTypes(schema);
-  return prettier.format(
-    `
-    ${generateEnums(types.enums)};
-    ${generateInterfaces(types.interfaces)}
-  `,
-    { parser: "typescript" }
-  );
-}
