@@ -2,6 +2,7 @@ export default {
   interfaces: [
     {
       name: "IScuttlespaceUser",
+      extension: false,
       fields: [
         { name: "about?", type: "string | null" },
         { name: "domain?", type: "string | null" },
@@ -15,6 +16,8 @@ export default {
       index: 0
     },
     {
+      name: "IQuery",
+      extension: true,
       fields: [
         {
           arguments: [
@@ -27,8 +30,7 @@ export default {
           type: "string"
         }
       ],
-      index: 1,
-      name: "IQuery"
+      index: 1
     }
   ],
   enums: []

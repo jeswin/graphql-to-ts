@@ -2,6 +2,7 @@ export default {
   interfaces: [
     {
       name: "ICreateOrRenameUserArgs",
+      extension: false,
       fields: [
         { name: "externalId", type: "string" },
         { name: "pub", type: "string" },
@@ -11,21 +12,25 @@ export default {
     },
     {
       name: "ICreateOrRenameUserResult",
+      extension: false,
       fields: [{ name: "status", type: "string" }],
       index: 1
     },
     {
       name: "IChangeUserStatusArgs",
+      extension: false,
       fields: [{ name: "externalId", type: "string" }],
       index: 2
     },
     {
       name: "IChangeUserStatusResult",
+      extension: false,
       fields: [{ name: "username", type: "string" }],
       index: 3
     },
     {
       name: "IMutation",
+      extension: true,
       fields: [
         {
           arguments: [

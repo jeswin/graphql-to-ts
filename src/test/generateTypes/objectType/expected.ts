@@ -2,6 +2,7 @@ export default {
   interfaces: [
     {
       name: "IScuttlespaceUser",
+      extension: false,
       fields: [
         { name: "about?", type: "string | null" },
         { name: "domain?", type: "string | null" },

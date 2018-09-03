@@ -2,6 +2,7 @@ export default {
   interfaces: [
     {
       name: "IScuttlespaceUserDTO",
+      extension: false,
       fields: [
         { name: "about?", type: "string | null" },
         { name: "domain?", type: "string | null" },
@@ -19,6 +20,7 @@ export default {
     },
     {
       name: "IPermissionDTO",
+      extension: false,
       fields: [
         { name: "rowid", type: "string" },
         {
@@ -35,6 +37,7 @@ export default {
     },
     {
       name: "IQuery",
+      extension: true,
       fields: [
         {
           arguments: [

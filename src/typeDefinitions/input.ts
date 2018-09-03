@@ -11,6 +11,7 @@ export default function getInputObjectType(
 ): ITSInterfaceDefinition {
   return {
     name: `I${def.name.value}`,
+    extension: false,
     fields: def.fields.map(field => {
       return field.kind === "InputValueDefinition"
         ? (() => {

@@ -9,6 +9,7 @@ export default function getObjectType(
 ): ITSInterfaceDefinition {
   return {
     name: `I${def.name.value}`,
+    extension: def.kind === "ObjectTypeExtension",
     fields: def.fields.map(field => {
       return field.kind === "FieldDefinition"
         ? (() => {

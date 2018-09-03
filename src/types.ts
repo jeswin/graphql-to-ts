@@ -15,7 +15,7 @@ export interface IGQLFieldDefinitionNode extends IGQLNamedNode {
 }
 
 export interface IGQLObjectTypeDefinitionNode extends IGQLNamedNode {
-  kind: "ObjectTypeDefinition";
+  kind: "ObjectTypeDefinition" | "ObjectTypeExtension";
   fields: IGQLFieldDefinitionNode[];
 }
 
@@ -61,6 +61,7 @@ export interface ITSTypeEntry {
 
 export interface ITSInterfaceDefinition extends ITSTypeEntry {
   name: string;
+  extension: boolean;
   fields: ITSField[];
 }
 
