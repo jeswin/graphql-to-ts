@@ -1,16 +1,11 @@
-import prettier = require("prettier");
 import gql from "graphql-tag";
-import { inspect, isNull, log } from "util";
 import exception from "./exception";
 import getObjectType from "./typeDefinitions/objectType";
 import getEnumType from "./typeDefinitions/enum";
 import getInputObjectType from "./typeDefinitions/input";
-import {
-  IGQLDocument,
-  ITSInterfaceDefinition,
-  ITSTypes,
-  ITSEnumDefinition
-} from "./types";
+import { IGQLDocument, ITSTypes } from "./types";
+
+export * from "./types";
 
 export function getTypes(schema: string): ITSTypes {
   const gqlDoc: IGQLDocument = gql([schema]);
