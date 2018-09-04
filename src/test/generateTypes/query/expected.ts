@@ -4,15 +4,16 @@ export default {
       name: "IScuttlespaceUserDTO",
       extension: false,
       fields: [
-        { name: "about?", type: "string | null" },
-        { name: "domain?", type: "string | null" },
-        { name: "enabled", type: "boolean" },
-        { name: "externalId", type: "string" },
-        { name: "pub", type: "string" },
-        { name: "rowid", type: "string" },
-        { name: "username", type: "string" },
+        { name: "about", nullable: true, type: "string | null" },
+        { name: "domain", nullable: true, type: "string | null" },
+        { name: "enabled", nullable: false, type: "boolean" },
+        { name: "externalId", nullable: false, type: "string" },
+        { name: "pub", nullable: false, type: "string" },
+        { name: "rowid", nullable: false, type: "string" },
+        { name: "username", nullable: false, type: "string" },
         {
-          name: "permissions?",
+          name: "permissions",
+          nullable: true,
           type: "[IPermissionDTO | null] | null"
         }
       ],
@@ -22,16 +23,18 @@ export default {
       name: "IPermissionDTO",
       extension: false,
       fields: [
-        { name: "rowid", type: "string" },
+        { name: "rowid", nullable: false, type: "string" },
         {
           name: "assigner",
+          nullable: false,
           type: "IScuttlespaceUserDTO"
         },
         {
           name: "assignee",
+          nullable: false,
           type: "IScuttlespaceUserDTO"
         },
-        { name: "permissions?", type: "string | null" }
+        { name: "permissions", nullable: true, type: "string | null" }
       ],
       index: 1
     },
@@ -41,11 +44,12 @@ export default {
       fields: [
         {
           arguments: [
-            { name: "domain?", type: "string | null" },
-            { name: "externalId?", type: "string | null" },
-            { name: "username?", type: "string | null" }
+            { name: "domain", nullable: true, type: "string | null" },
+            { name: "externalId", nullable: true, type: "string | null" },
+            { name: "username", nullable: true, type: "string | null" }
           ],
-          name: "user?",
+          nullable: true,
+          name: "user",
           type: "IScuttlespaceUserDTO | null"
         }
       ],

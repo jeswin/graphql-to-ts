@@ -16,9 +16,9 @@ export default function getInputObjectType(
       return field.kind === "InputValueDefinition"
         ? (() => {
             const tsType = toTSType(field.type);
-            const isNullable = tsType.endsWith(" | null");
             return {
-              name: field.name.value + (isNullable ? "?" : ""),
+              name: field.name.value,
+              nullable: tsType.endsWith(" | null"),
               type: tsType
             };
           })()

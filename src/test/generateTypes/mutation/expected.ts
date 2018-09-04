@@ -4,28 +4,28 @@ export default {
       name: "ICreateOrRenameUserArgs",
       extension: false,
       fields: [
-        { name: "externalId", type: "string" },
-        { name: "pub", type: "string" },
-        { name: "username", type: "string" }
+        { name: "externalId", nullable: false, type: "string" },
+        { name: "pub", nullable: false, type: "string" },
+        { name: "username", nullable: false, type: "string" }
       ],
       index: 0
     },
     {
       name: "ICreateOrRenameUserResult",
       extension: false,
-      fields: [{ name: "status", type: "string" }],
+      fields: [{ name: "status", nullable: false, type: "string" }],
       index: 1
     },
     {
       name: "IChangeUserStatusArgs",
       extension: false,
-      fields: [{ name: "externalId", type: "string" }],
+      fields: [{ name: "externalId", nullable: false, type: "string" }],
       index: 2
     },
     {
       name: "IChangeUserStatusResult",
       extension: false,
-      fields: [{ name: "username", type: "string" }],
+      fields: [{ name: "username", nullable: false, type: "string" }],
       index: 3
     },
     {
@@ -34,24 +34,50 @@ export default {
       fields: [
         {
           arguments: [
-            { name: "input?", type: "ICreateOrRenameUserArgs | null" }
+            {
+              name: "input",
+              nullable: true,
+              type: "ICreateOrRenameUserArgs | null"
+            }
           ],
           name: "createOrRenameUser",
+          nullable: false,
           type: "ICreateOrRenameUserResult"
         },
         {
-          arguments: [{ name: "input?", type: "IChangeUserStatusArgs | null" }],
+          arguments: [
+            {
+              name: "input",
+              nullable: true,
+              type: "IChangeUserStatusArgs | null"
+            }
+          ],
           name: "enableUser",
+          nullable: false,
           type: "IChangeUserStatusResult"
         },
         {
-          arguments: [{ name: "input?", type: "IChangeUserStatusArgs | null" }],
+          arguments: [
+            {
+              name: "input",
+              nullable: true,
+              type: "IChangeUserStatusArgs | null"
+            }
+          ],
           name: "disableUser",
+          nullable: false,
           type: "IChangeUserStatusResult"
         },
         {
-          arguments: [{ name: "input?", type: "IChangeUserStatusArgs | null" }],
+          arguments: [
+            {
+              name: "input",
+              nullable: true,
+              type: "IChangeUserStatusArgs | null"
+            }
+          ],
           name: "destroyUser",
+          nullable: false,
           type: "IChangeUserStatusResult"
         }
       ],

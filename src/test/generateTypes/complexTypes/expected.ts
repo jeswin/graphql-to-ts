@@ -4,8 +4,8 @@ export default {
       name: "ILocation",
       extension: false,
       fields: [
-        { name: "id?", type: "string | null" },
-        { name: "name?", type: "string | null" }
+        { name: "id", nullable: true, type: "string | null" },
+        { name: "name", nullable: true, type: "string | null" }
       ],
       index: 0
     },
@@ -13,8 +13,8 @@ export default {
       name: "IHotel",
       extension: false,
       fields: [
-        { name: "name?", type: "string | null" },
-        { name: "location?", type: "ILocation | null" }
+        { name: "name", nullable: true, type: "string | null" },
+        { name: "location", nullable: true, type: "ILocation | null" }
       ],
       index: 1
     }

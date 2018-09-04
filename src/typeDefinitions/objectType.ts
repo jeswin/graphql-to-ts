@@ -14,8 +14,8 @@ export default function getObjectType(
       return field.kind === "FieldDefinition"
         ? (() => {
             const tsType = toTSType(field.type);
-            const isNullable = tsType.endsWith(" | null");
-            const tsName = field.name.value + (isNullable ? "?" : "");
+            const nullable = tsType.endsWith(" | null");
+            const tsName = field.name.value;
             return field.arguments && field.arguments.length
               ? {
                   arguments:
@@ -25,14 +25,10 @@ export default function getObjectType(
                             f.kind === "InputValueDefinition"
                               ? (() => {
                                   const tsFieldType = toTSType(f.type);
-                                  const isFieldNullable = tsFieldType.endsWith(
-                                    " | null"
-                                  );
-                                  const tsFieldName =
-                                    f.name.value + (isFieldNullable ? "?" : "");
-
+                                  const tsFieldName = f.name.value;
                                   return {
                                     name: tsFieldName,
+                                    nullable: tsFieldType.endsWith(" | null"),
                                     type: tsFieldType
                                   };
                                 })()
@@ -41,10 +37,12 @@ export default function getObjectType(
                                 )
                         )
                       : undefined,
+                  nullable,
                   name: tsName,
                   type: tsType
                 }
               : {
+                  nullable,
                   name: tsName,
                   type: tsType
                 };

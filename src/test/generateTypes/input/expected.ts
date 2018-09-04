@@ -3,7 +3,7 @@ export default {
     {
       name: "IChangeUserStatusArgs",
       extension: false,
-      fields: [{ name: "externalId", type: "string" }],
+      fields: [{ name: "externalId", nullable: false, type: "string" }],
       index: 0
     }
   ],

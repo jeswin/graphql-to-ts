@@ -47,12 +47,14 @@ export interface IGQLDocument {
 export interface ITSInputValue {
   name: string;
   type: string;
+  nullable: boolean;
 }
 
 export interface ITSField {
   name: string;
   arguments?: ITSInputValue[];
   type: string;
+  nullable: boolean;
 }
 
 export interface ITSTypeEntry {

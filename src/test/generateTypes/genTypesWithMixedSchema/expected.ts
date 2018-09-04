@@ -4,14 +4,18 @@ export default {
       name: "IScuttlespaceUser",
       extension: false,
       fields: [
-        { name: "about?", type: "string | null" },
-        { name: "domain?", type: "string | null" },
-        { name: "enabled", type: "boolean" },
-        { name: "externalId", type: "string" },
-        { name: "pub", type: "string" },
-        { name: "rowid", type: "string" },
-        { name: "username", type: "string" },
-        { name: "permissions?", type: "[IPermissionDTO | null] | null" }
+        { name: "about", nullable: true, type: "string | null" },
+        { name: "domain", nullable: true, type: "string | null" },
+        { name: "enabled", nullable: false, type: "boolean" },
+        { name: "externalId", nullable: false, type: "string" },
+        { name: "pub", nullable: false, type: "string" },
+        { name: "rowid", nullable: false, type: "string" },
+        { name: "username", nullable: false, type: "string" },
+        {
+          name: "permissions",
+          nullable: true,
+          type: "[IPermissionDTO | null] | null"
+        }
       ],
       index: 0
     },
@@ -22,11 +26,13 @@ export default {
         {
           arguments: [
             {
-              name: "id?",
+              name: "id",
+              nullable: true,
               type: "string | null"
             }
           ],
           name: "user",
+          nullable: false,
           type: "string"
         }
       ],
