@@ -21,7 +21,7 @@ export default function getInputObjectType(
             const tsType = toTSType(field.type, knownTypes);
             return {
               name: field.name.value,
-              nullable: tsType.endsWith(" | null"),
+              nullable: tsType.endsWith(" | undefined"),
               type: tsType
             };
           })()

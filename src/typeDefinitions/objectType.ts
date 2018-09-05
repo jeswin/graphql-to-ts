@@ -16,7 +16,7 @@ export default function getObjectType(
       return field.kind === "FieldDefinition"
         ? (() => {
             const tsType = toTSType(field.type, knownTypes);
-            const nullable = tsType.endsWith(" | null");
+            const nullable = tsType.endsWith(" | undefined");
             const tsName = field.name.value;
             return field.arguments && field.arguments.length
               ? {
@@ -30,7 +30,7 @@ export default function getObjectType(
                                   const tsFieldName = f.name.value;
                                   return {
                                     name: tsFieldName,
-                                    nullable: tsFieldType.endsWith(" | null"),
+                                    nullable: tsFieldType.endsWith(" | undefined"),
                                     type: tsFieldType
                                   };
                                 })()

@@ -42,7 +42,7 @@ export default {
             {
               name: "input",
               nullable: true,
-              type: "ICreateOrRenameUserArgs | null"
+              type: "ICreateOrRenameUserArgs | undefined"
             }
           ],
           name: "createOrRenameUser",
@@ -54,7 +54,7 @@ export default {
             {
               name: "input",
               nullable: true,
-              type: "IChangeUserStatusArgs | null"
+              type: "IChangeUserStatusArgs | undefined"
             }
           ],
           name: "enableUser",
@@ -66,7 +66,7 @@ export default {
             {
               name: "input",
               nullable: true,
-              type: "IChangeUserStatusArgs | null"
+              type: "IChangeUserStatusArgs | undefined"
             }
           ],
           name: "disableUser",
@@ -78,7 +78,7 @@ export default {
             {
               name: "input",
               nullable: true,
-              type: "IChangeUserStatusArgs | null"
+              type: "IChangeUserStatusArgs | undefined"
             }
           ],
           name: "destroyUser",

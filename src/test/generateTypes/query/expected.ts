@@ -5,8 +5,8 @@ export default {
       graphqlType: "ScuttlespaceUserDTO",
       extension: false,
       fields: [
-        { name: "about", nullable: true, type: "string | null" },
-        { name: "domain", nullable: true, type: "string | null" },
+        { name: "about", nullable: true, type: "string | undefined" },
+        { name: "domain", nullable: true, type: "string | undefined" },
         { name: "enabled", nullable: false, type: "boolean" },
         { name: "externalId", nullable: false, type: "string" },
         { name: "pub", nullable: false, type: "string" },
@@ -15,7 +15,7 @@ export default {
         {
           name: "permissions",
           nullable: true,
-          type: "[IPermissionDTO | null] | null"
+          type: "[IPermissionDTO | undefined] | undefined"
         }
       ],
       index: 0
@@ -36,7 +36,7 @@ export default {
           nullable: false,
           type: "IScuttlespaceUserDTO"
         },
-        { name: "permissions", nullable: true, type: "string | null" }
+        { name: "permissions", nullable: true, type: "string | undefined" }
       ],
       index: 1
     },
@@ -47,13 +47,13 @@ export default {
       fields: [
         {
           arguments: [
-            { name: "domain", nullable: true, type: "string | null" },
-            { name: "externalId", nullable: true, type: "string | null" },
-            { name: "username", nullable: true, type: "string | null" }
+            { name: "domain", nullable: true, type: "string | undefined" },
+            { name: "externalId", nullable: true, type: "string | undefined" },
+            { name: "username", nullable: true, type: "string | undefined" }
           ],
           nullable: true,
           name: "user",
-          type: "IScuttlespaceUserDTO | null"
+          type: "IScuttlespaceUserDTO | undefined"
         }
       ],
       index: 2

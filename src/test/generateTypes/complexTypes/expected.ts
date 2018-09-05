@@ -5,8 +5,8 @@ export default {
       graphqlType: "Location",
       extension: false,
       fields: [
-        { name: "id", nullable: true, type: "string | null" },
-        { name: "name", nullable: true, type: "string | null" }
+        { name: "id", nullable: true, type: "string | undefined" },
+        { name: "name", nullable: true, type: "string | undefined" }
       ],
       index: 0
     },
@@ -15,8 +15,8 @@ export default {
       graphqlType: "Hotel",
       extension: false,
       fields: [
-        { name: "name", nullable: true, type: "string | null" },
-        { name: "location", nullable: true, type: "ILocation | null" }
+        { name: "name", nullable: true, type: "string | undefined" },
+        { name: "location", nullable: true, type: "ILocation | undefined" }
       ],
       index: 1
     }

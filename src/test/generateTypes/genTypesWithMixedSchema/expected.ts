@@ -13,8 +13,8 @@ export default {
       graphqlType: "ScuttlespaceUser",
       extension: false,
       fields: [
-        { name: "about", nullable: true, type: "string | null" },
-        { name: "domain", nullable: true, type: "string | null" },
+        { name: "about", nullable: true, type: "string | undefined" },
+        { name: "domain", nullable: true, type: "string | undefined" },
         { name: "enabled", nullable: false, type: "boolean" },
         { name: "externalId", nullable: false, type: "string" },
         { name: "pub", nullable: false, type: "string" },
@@ -23,12 +23,12 @@ export default {
         {
           name: "permissions",
           nullable: true,
-          type: "[IPermissionDTO | null] | null"
+          type: "[IPermissionDTO | undefined] | undefined"
         },
         {
           name: "status",
           nullable: true,
-          type: "Status | null"
+          type: "Status | undefined"
         }
       ],
       index: 1
@@ -43,7 +43,7 @@ export default {
             {
               name: "id",
               nullable: true,
-              type: "string | null"
+              type: "string | undefined"
             }
           ],
           name: "user",
