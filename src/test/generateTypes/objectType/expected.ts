@@ -33,7 +33,7 @@ export default {
         {
           name: "permissions",
           nullable: true,
-          type: "[IPermissionDTO | undefined] | undefined"
+          type: "(IPermissionDTO | undefined)[] | undefined"
         }
       ],
       index: 1
