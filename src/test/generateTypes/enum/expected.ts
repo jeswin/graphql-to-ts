@@ -3,6 +3,7 @@ export default {
   enums: [
     {
       name: "UserStatusEnum",
+      graphqlType: "UserStatusEnum",
       values: ["AVAILABLE", "TAKEN", "OWN"],
       index: 0
     }

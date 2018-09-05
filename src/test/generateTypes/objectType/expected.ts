@@ -1,7 +1,26 @@
 export default {
   interfaces: [
     {
+      extension: false,
+      fields: [
+        {
+          name: "resource",
+          nullable: false,
+          type: "string"
+        },
+        {
+          name: "allow",
+          nullable: false,
+          type: "boolean"
+        }
+      ],
+      graphqlType: "PermissionDTO",
+      index: 0,
+      name: "IPermissionDTO"
+    },
+    {
       name: "IScuttlespaceUser",
+      graphqlType: "ScuttlespaceUser",
       extension: false,
       fields: [
         { name: "about", nullable: true, type: "string | null" },
@@ -17,7 +36,7 @@ export default {
           type: "[IPermissionDTO | null] | null"
         }
       ],
-      index: 0
+      index: 1
     }
   ],
   enums: []

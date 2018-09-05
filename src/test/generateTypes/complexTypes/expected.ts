@@ -2,6 +2,7 @@ export default {
   interfaces: [
     {
       name: "ILocation",
+      graphqlType: "Location",
       extension: false,
       fields: [
         { name: "id", nullable: true, type: "string | null" },
@@ -11,6 +12,7 @@ export default {
     },
     {
       name: "IHotel",
+      graphqlType: "Hotel",
       extension: false,
       fields: [
         { name: "name", nullable: true, type: "string | null" },

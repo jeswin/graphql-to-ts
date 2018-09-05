@@ -1,4 +1,9 @@
 export default `
+enum Status {
+  Active,
+  Disabled
+}
+
 type ScuttlespaceUser {
   about: String
   domain: String
@@ -7,7 +12,8 @@ type ScuttlespaceUser {
   pub: String!
   rowid: ID!
   username: String!
-  permissions: [PermissionDTO]
+  permissions: [PermissionDTO],
+  status: Status
 }
 
 extend type Query {

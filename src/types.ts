@@ -63,12 +63,14 @@ export interface ITSTypeEntry {
 
 export interface ITSInterfaceDefinition extends ITSTypeEntry {
   name: string;
+  graphqlType: string;
   extension: boolean;
   fields: ITSField[];
 }
 
 export interface ITSEnumDefinition extends ITSTypeEntry {
   name: string;
+  graphqlType: string;
   values: string[];
 }
 

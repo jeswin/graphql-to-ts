@@ -1,4 +1,9 @@
 export default `
+type PermissionDTO {
+  resource: String!
+  allow: Boolean!
+}
+
 type ScuttlespaceUser {
   about: String
   domain: String

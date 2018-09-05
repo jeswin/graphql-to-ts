@@ -2,6 +2,7 @@ export default {
   interfaces: [
     {
       name: "IScuttlespaceUserDTO",
+      graphqlType: "ScuttlespaceUserDTO",
       extension: false,
       fields: [
         { name: "about", nullable: true, type: "string | null" },
@@ -21,6 +22,7 @@ export default {
     },
     {
       name: "IPermissionDTO",
+      graphqlType: "PermissionDTO",
       extension: false,
       fields: [
         { name: "rowid", nullable: false, type: "string" },
@@ -40,6 +42,7 @@ export default {
     },
     {
       name: "IQuery",
+      graphqlType: "Query",
       extension: true,
       fields: [
         {

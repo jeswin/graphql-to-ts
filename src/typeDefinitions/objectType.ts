@@ -1,19 +1,21 @@
 import exception from "../exception";
-import { IGQLObjectTypeDefinitionNode, ITSInterfaceDefinition } from "../types";
+import { IGQLObjectTypeDefinitionNode, ITSInterfaceDefinition, ITSTypes } from "../types";
 import { toTSType } from "../builtinTypes";
 import { inspect } from "util";
 
 export default function getObjectType(
   def: IGQLObjectTypeDefinitionNode,
-  index: number
+  index: number,
+  knownTypes: ITSTypes
 ): ITSInterfaceDefinition {
   return {
     name: `I${def.name.value}`,
+    graphqlType: def.name.value,
     extension: def.kind === "ObjectTypeExtension",
     fields: def.fields.map(field => {
       return field.kind === "FieldDefinition"
         ? (() => {
-            const tsType = toTSType(field.type);
+            const tsType = toTSType(field.type, knownTypes);
             const nullable = tsType.endsWith(" | null");
             const tsName = field.name.value;
             return field.arguments && field.arguments.length
@@ -24,7 +26,7 @@ export default function getObjectType(
                           f =>
                             f.kind === "InputValueDefinition"
                               ? (() => {
-                                  const tsFieldType = toTSType(f.type);
+                                  const tsFieldType = toTSType(f.type, knownTypes);
                                   const tsFieldName = f.name.value;
                                   return {
                                     name: tsFieldName,

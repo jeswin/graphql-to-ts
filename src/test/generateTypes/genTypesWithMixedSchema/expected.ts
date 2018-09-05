@@ -1,7 +1,16 @@
 export default {
+  enums: [
+    {
+      graphqlType: "Status",
+      index: 0,
+      name: "Status",
+      values: ["Active", "Disabled"]
+    }
+  ],
   interfaces: [
     {
       name: "IScuttlespaceUser",
+      graphqlType: "ScuttlespaceUser",
       extension: false,
       fields: [
         { name: "about", nullable: true, type: "string | null" },
@@ -15,12 +24,18 @@ export default {
           name: "permissions",
           nullable: true,
           type: "[IPermissionDTO | null] | null"
+        },
+        {
+          name: "status",
+          nullable: true,
+          type: "Status | null"
         }
       ],
-      index: 0
+      index: 1
     },
     {
       name: "IQuery",
+      graphqlType: "Query",
       extension: true,
       fields: [
         {
@@ -36,8 +51,7 @@ export default {
           type: "string"
         }
       ],
-      index: 1
+      index: 2
     }
-  ],
-  enums: []
+  ]
 };

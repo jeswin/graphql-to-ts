@@ -19,7 +19,7 @@ function toTestDef(item: [string, string] | TestDef): TestDef {
 }
 
 const generateTypesTests = ([
-  ["type", "objectType"],
+  ["objectType", "objectType"],
   ["enum", "enum"],
   ["input", "input"],
   ["types given mixed schema", "genTypesWithMixedSchema"],

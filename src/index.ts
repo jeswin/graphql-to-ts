@@ -17,18 +17,18 @@ export function getTypes(schema: string): ITSTypes {
           def.kind === "ObjectTypeExtension"
             ? {
                 ...acc,
-                interfaces: acc.interfaces.concat(getObjectType(def, i))
+                interfaces: acc.interfaces.concat(getObjectType(def, i, acc))
               }
             : def.kind === "EnumTypeDefinition"
               ? {
                   ...acc,
-                  enums: acc.enums.concat(getEnumType(def, i))
+                  enums: acc.enums.concat(getEnumType(def, i, acc))
                 }
               : def.kind === "InputObjectTypeDefinition"
                 ? {
                     ...acc,
                     interfaces: acc.interfaces.concat(
-                      getInputObjectType(def, i)
+                      getInputObjectType(def, i, acc)
                     )
                   }
                 : acc,
