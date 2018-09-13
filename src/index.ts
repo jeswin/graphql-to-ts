@@ -4,6 +4,7 @@ import getObjectType from "./typeDefinitions/objectType";
 import getEnumType from "./typeDefinitions/enum";
 import getInputObjectType from "./typeDefinitions/input";
 import { IGQLDocument, ITSTypes } from "./types";
+import { inspect } from "util";
 
 export * from "./types";
 
@@ -34,5 +35,13 @@ export function getTypes(schema: string): ITSTypes {
                 : acc,
         { interfaces: [], enums: [] }
       )
+    : exception("Invalid graphql schema. Try validating first.");
+}
+
+export function getQueries(schema: string): ITSTypes {
+  const gqlDoc: IGQLDocument = gql([schema]);
+
+  return gqlDoc.kind === "Document"
+    ? (console.log(inspect(gqlDoc, undefined, 18)) as any)
     : exception("Invalid graphql schema. Try validating first.");
 }
