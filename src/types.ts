@@ -78,3 +78,26 @@ export interface ITSTypes {
   enums: ITSEnumDefinition[];
   interfaces: ITSInterfaceDefinition[];
 }
+
+export interface ITSQueryField {
+  name: string;
+  type: string;
+  nullable: boolean;
+}
+
+export interface ITSQuerySelectionType {
+  name: string;
+  definition: string;
+}
+
+export interface ITSQueryDefinition extends ITSTypeEntry {
+  name: string;
+  graphqlType: string;
+  variables: ITSQueryField[];
+  selections: ITSQuerySelectionType;
+}
+
+export interface ITSQueryTypes {
+  queries: ITSQueryDefinition[];
+  mutations: ITSQueryDefinition[];
+}

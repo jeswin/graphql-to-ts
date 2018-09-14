@@ -3,7 +3,14 @@ import exception from "./exception";
 import getObjectType from "./typeDefinitions/objectType";
 import getEnumType from "./typeDefinitions/enum";
 import getInputObjectType from "./typeDefinitions/input";
-import { IGQLDocument, ITSTypes } from "./types";
+import getQueryDefintion from "./queryDefinitions/query";
+
+import {
+  IGQLDocument,
+  ITSTypes,
+  ITSQueryTypes,
+  ITSQueryDefinition
+} from "./types";
 import { inspect } from "util";
 
 export * from "./types";
@@ -38,10 +45,28 @@ export function getTypes(schema: string): ITSTypes {
     : exception("Invalid graphql schema. Try validating first.");
 }
 
-export function getQueries(schema: string): ITSTypes {
-  const gqlDoc: IGQLDocument = gql([schema]);
+export function getQueries(queries: string, schema: string): ITSQueryTypes {
+  const gqlDoc: IGQLDocument = gql([queries]);
 
   return gqlDoc.kind === "Document"
-    ? (console.log(inspect(gqlDoc, undefined, 18)) as any)
+    ? gqlDoc.definitions.reduce(
+        (acc: ITSQueryTypes, def: any, i: number) =>
+          def.kind === "OperationDefinition"
+            ? def.operation === "query"
+              ? {
+                  ...acc,
+                  queries: acc.queries.concat(getQueryDefintion(def, schema))
+                }
+              : def.operation === "mutation"
+                ? {
+                    ...acc,
+                    mutations: acc.mutations.concat(
+                      getQueryDefintion(def, schema)
+                    )
+                  }
+                : acc
+            : acc,
+        { queries: [], mutations: [] }
+      )
     : exception("Invalid graphql schema. Try validating first.");
 }
