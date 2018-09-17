@@ -46,6 +46,8 @@ export function getTypes(schema: string): ITSTypes {
 }
 
 export function getQueries(queries: string, schema: string): ITSQueryTypes {
+  const types = getTypes(schema);
+
   const gqlDoc: IGQLDocument = gql([queries]);
 
   return gqlDoc.kind === "Document"
@@ -55,13 +57,15 @@ export function getQueries(queries: string, schema: string): ITSQueryTypes {
             ? def.operation === "query"
               ? {
                   ...acc,
-                  queries: acc.queries.concat(getQueryDefintion(def, schema))
+                  queries: acc.queries.concat(
+                    getQueryDefintion(def, types, i, "query")
+                  )
                 }
               : def.operation === "mutation"
                 ? {
                     ...acc,
                     mutations: acc.mutations.concat(
-                      getQueryDefintion(def, schema)
+                      getQueryDefintion(def, types, i, "mutation")
                     )
                   }
                 : acc

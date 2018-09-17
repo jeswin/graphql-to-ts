@@ -3,12 +3,12 @@ import { ITSTypes } from "./types";
 
 export function toTSType(type: any, knownTypes: ITSTypes): string {
   return type.kind === "NonNullType"
-  ? toTSType(type.type, knownTypes).replace(/ \| undefined$/, "")
-  : type.kind === "ListType"
-  ? `(${toTSType(type.type, knownTypes)})[] | undefined`
-  : type.kind === "NamedType"
-  ? `${getBasicTSType(type.name.value, knownTypes)} | undefined`
-  : exception(`Unknown type kind ${type.kind}`);
+    ? toTSType(type.type, knownTypes).replace(/ \| undefined$/, "")
+    : type.kind === "ListType"
+      ? `(${toTSType(type.type, knownTypes)})[] | undefined`
+      : type.kind === "NamedType"
+        ? `${getBasicTSType(type.name.value, knownTypes)} | undefined`
+        : exception(`Unknown type kind ${type.kind}`);
 }
 
 function getBasicTSType(type: string, knownTypes: ITSTypes) {
@@ -32,7 +32,19 @@ function getBasicTSType(type: string, knownTypes: ITSTypes) {
                     );
                     return matchingInterface
                       ? matchingInterface.name
-                      : `I${type}`
+                      : `I${type}`;
                   })();
             })();
+}
+
+export function isBuiltIn(nullableType: string) {
+  const type = getTypeFromNullable(nullableType);
+  return ["string", "boolean", "number"].includes(type);
+}
+
+export function getTypeFromNullable(nullableType: string) {
+  return nullableType
+    .split("|")
+    .map(x => x.trim())
+    .filter(x => x !== "undefined")[0];
 }

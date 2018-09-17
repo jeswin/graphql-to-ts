@@ -79,9 +79,10 @@ export interface ITSTypes {
   interfaces: ITSInterfaceDefinition[];
 }
 
-export interface ITSQueryField {
+export interface ITSQueryVariableDefinition {
   name: string;
   type: string;
+  defaultValue?: string;
   nullable: boolean;
 }
 
@@ -92,8 +93,7 @@ export interface ITSQuerySelectionType {
 
 export interface ITSQueryDefinition extends ITSTypeEntry {
   name: string;
-  graphqlType: string;
-  variables: ITSQueryField[];
+  variables: ITSQueryVariableDefinition[];
   selections: ITSQuerySelectionType;
 }
 
