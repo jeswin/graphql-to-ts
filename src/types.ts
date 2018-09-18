@@ -1,6 +1,6 @@
 export interface IGQLNameNode {
   kind: "Name";
-  value: any;
+  value: string;
 }
 
 export interface IGQLNamedNode {
@@ -8,9 +8,33 @@ export interface IGQLNamedNode {
   description?: string;
 }
 
+/* Basic Types in GQL */
+
+export interface IGQLNamedTypeNode {
+  kind: "NamedType";
+  name: { kind: "Name"; value: string };
+}
+
+export interface IGQLListTypeNode {
+  kind: "ListType";
+  type: IGQLNamedTypeNode | IGQLNonNullTypeNode;
+}
+
+export interface IGQLNonNullTypeNode {
+  kind: "NonNullType";
+  type: IGQLListTypeNode | IGQLNamedTypeNode;
+}
+
+export type IGQLTypeNode =
+  | IGQLNamedTypeNode
+  | IGQLListTypeNode
+  | IGQLNonNullTypeNode;
+
+/* Type Definitions in a GQL Document */
+
 export interface IGQLFieldDefinitionNode extends IGQLNamedNode {
   kind: "FieldDefinition";
-  type: any;
+  type: IGQLTypeNode;
   arguments?: IGQLInputValueDefinitionNode[];
 }
 
@@ -21,7 +45,7 @@ export interface IGQLObjectTypeDefinitionNode extends IGQLNamedNode {
 
 export interface IGQLInputValueDefinitionNode extends IGQLNamedNode {
   kind: "InputValueDefinition";
-  type: any;
+  type: IGQLTypeNode;
 }
 
 export interface IGQLInputObjectTypeDefinitionNode extends IGQLNamedNode {
@@ -34,40 +58,50 @@ export interface IGQLEnumValueDefinitionNode extends IGQLNamedNode {
   description: string;
 }
 
-export interface IEnumTypeDefinitionNode extends IGQLNamedNode {
+export interface IGQLEnumTypeDefinitionNode extends IGQLNamedNode {
   kind: "EnumTypeDefinition";
   values: IGQLEnumValueDefinitionNode[];
 }
 
-export interface IGQLVariableDefinition {
+export type IGQLTypeDefinitionNode =
+  | IGQLEnumTypeDefinitionNode
+  | IGQLInputObjectTypeDefinitionNode
+  | IGQLObjectTypeDefinitionNode;
+
+/* GQL Query Nodes */
+
+export interface IGQLVariableDefinitionNode {
   kind: "VariableDefinition";
-  variable: { kind: "Variable"; name: { kind: "Name"; value: string } };
-  type: any;
+  variable: { kind: "Variable"; name: IGQLNameNode };
+  type: IGQLTypeNode;
   defaultValue: number | string | boolean;
 }
 
-export interface IGQLSelectionSet {
-  kind: "SelectionSet";
-  selections: IGQLSelection[];
-}
-
-export interface IGQLSelection {
+export interface IGQLSelectionNode {
   kind: "Field";
   name: IGQLNameNode;
-  selectionSet?: IGQLSelectionSet;
+  selectionSet?: IGQLSelectionSetNode;
 }
 
-export interface IGQLOperationDefinition extends IGQLNamedNode {
+export interface IGQLSelectionSetNode {
+  kind: "SelectionSet";
+  selections: IGQLSelectionNode[];
+}
+
+export interface IGQLOperationDefinitionNode extends IGQLNamedNode {
   kind: "OperationDefinition";
   operation: "query" | "mutation";
-  variableDefinitions: IGQLVariableDefinition[];
-  selectionSet: IGQLSelectionSet;
+  variableDefinitions: IGQLVariableDefinitionNode[];
+  selectionSet: IGQLSelectionSetNode;
 }
 
-export interface IGQLDocument {
+export interface IGQLDocumentNode {
   kind: "Document";
   definitions: IGQLNamedNode[];
 }
+
+
+/* TypeScript Types */
 
 export interface ITSInputValue {
   name: string;
@@ -112,13 +146,13 @@ export interface ITSQueryVariable {
 }
 
 export interface ITSQuerySelection {
-  [key: string]: string | ITSQuerySelection | ITSQuerySelection[];
+  [key: string]: string | ITSQuerySelection;
 }
 
 export interface ITSQuery extends ITSTypeEntry {
   index: number;
   name: string;
-  selections: ITSQuerySelection[];
+  selections: ITSQuerySelection;
   variables: ITSQueryVariable[];
 }
 

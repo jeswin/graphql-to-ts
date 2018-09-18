@@ -2,31 +2,42 @@ import {
   ITSQuery,
   ITSTypes,
   ITSInterfaceDefinition,
-  IGQLOperationDefinition,
-  IGQLSelectionSet,
-  IGQLSelection,
-  ITSQuerySelectionSet
+  IGQLOperationDefinitionNode,
+  IGQLSelectionSetNode,
+  ITSQuerySelection,
+  ITSQueryVariable
 } from "../types";
-import { inspect } from "util";
-import { toTSType, isBuiltIn, getTypeFromNullable } from "../builtinTypes";
+import { inspect, isNull } from "util";
+import {
+  toTSType,
+  isBuiltIn,
+  getTypeFromNullable,
+  isNullable
+} from "../builtinTypes";
 import exception from "../exception";
 
 export default function generateQueryDefinition(
-  def: IGQLOperationDefinition,
+  def: IGQLOperationDefinitionNode,
   types: ITSTypes,
   i: number,
   queryType: "query" | "mutation"
 ): ITSQuery {
   console.log(inspect(def, undefined, 12));
   const queryName = def.name.value;
-  const variables = def.variableDefinitions
+
+  const variables: ITSQueryVariable[] = def.variableDefinitions
     .filter(x => x.kind === "VariableDefinition")
     .map(x => {
       const name = x.variable.name.value;
       const type = toTSType(x.type, types);
       return x.defaultValue
-        ? { name, type, defaultValue: x.defaultValue }
-        : { name, type };
+        ? {
+            defaultValue: x.defaultValue,
+            name,
+            nullable: isNullable(type),
+            type
+          }
+        : { name, type, nullable: isNullable(type) };
     });
 
   const interfaceName = queryType === "mutation" ? "Mutation" : "Query";
@@ -38,9 +49,7 @@ export default function generateQueryDefinition(
     ? (() => {
         const selections = createSelections(
           queryName,
-          {
-            
-          },
+          {},
           def.selectionSet,
           tsInterface,
           types
@@ -59,13 +68,13 @@ export default function generateQueryDefinition(
 
 function createSelections(
   queryName: string,
-  outputTSType: ITSQuerySelectionSet,
-  selectionSet: IGQLSelectionSet,
+  outputTSType: ITSQuerySelection,
+  selectionSet: IGQLSelectionSetNode,
   currentTSType: ITSInterfaceDefinition,
   types: ITSTypes
-): ITSQuerySelectionSet {
+): ITSQuerySelection {
   return selectionSet.selections.reduce((acc, selection) => {
-    const fieldName = selection.name.value;
+    const fieldName: string = selection.name.value;
     const tsField = currentTSType.fields.find(x => x.name === fieldName);
     return tsField
       ? ((acc[fieldName] = !selection.selectionSet

@@ -1,7 +1,7 @@
-import { IEnumTypeDefinitionNode, ITSEnumDefinition, ITSTypes } from "../types";
+import { IGQLEnumTypeDefinitionNode, ITSEnumDefinition, ITSTypes } from "../types";
 
 export default function getEnumType(
-  def: IEnumTypeDefinitionNode,
+  def: IGQLEnumTypeDefinitionNode,
   index: number,
   knownTypes: ITSTypes
 ): ITSEnumDefinition {

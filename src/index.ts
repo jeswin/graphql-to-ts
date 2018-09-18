@@ -6,17 +6,18 @@ import getInputObjectType from "./typeDefinitions/input";
 import getQueryDefintion from "./queryDefinitions/query";
 
 import {
-  IGQLDocument,
+  IGQLDocumentNode,
   ITSTypes,
   ITSQueryTypes,
-  ITSQuery
+  ITSQuery,
+  IGQLNamedNode
 } from "./types";
 import { inspect } from "util";
 
 export * from "./types";
 
 export function getTypes(schema: string): ITSTypes {
-  const gqlDoc: IGQLDocument = gql([schema]);
+  const gqlDoc: IGQLDocumentNode = gql([schema]);
 
   return gqlDoc.kind === "Document"
     ? gqlDoc.definitions.reduce(
@@ -48,7 +49,7 @@ export function getTypes(schema: string): ITSTypes {
 export function getQueries(queries: string, schema: string): ITSQueryTypes {
   const types = getTypes(schema);
 
-  const gqlDoc: IGQLDocument = gql([queries]);
+  const gqlDoc: IGQLDocumentNode = gql([queries]);
 
   return gqlDoc.kind === "Document"
     ? gqlDoc.definitions.reduce(
