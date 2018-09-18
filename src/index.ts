@@ -9,7 +9,7 @@ import {
   IGQLDocument,
   ITSTypes,
   ITSQueryTypes,
-  ITSQueryDefinition
+  ITSQuery
 } from "./types";
 import { inspect } from "util";
 

@@ -39,6 +39,31 @@ export interface IEnumTypeDefinitionNode extends IGQLNamedNode {
   values: IGQLEnumValueDefinitionNode[];
 }
 
+export interface IGQLVariableDefinition {
+  kind: "VariableDefinition";
+  variable: { kind: "Variable"; name: { kind: "Name"; value: string } };
+  type: any;
+  defaultValue: number | string | boolean;
+}
+
+export interface IGQLSelectionSet {
+  kind: "SelectionSet";
+  selections: IGQLSelection[];
+}
+
+export interface IGQLSelection {
+  kind: "Field";
+  name: IGQLNameNode;
+  selectionSet?: IGQLSelectionSet;
+}
+
+export interface IGQLOperationDefinition extends IGQLNamedNode {
+  kind: "OperationDefinition";
+  operation: "query" | "mutation";
+  variableDefinitions: IGQLVariableDefinition[];
+  selectionSet: IGQLSelectionSet;
+}
+
 export interface IGQLDocument {
   kind: "Document";
   definitions: IGQLNamedNode[];
@@ -79,25 +104,25 @@ export interface ITSTypes {
   interfaces: ITSInterfaceDefinition[];
 }
 
-export interface ITSQueryVariableDefinition {
+export interface ITSQueryVariable {
   name: string;
   type: string;
-  defaultValue?: string;
+  defaultValue?: string | number | boolean;
   nullable: boolean;
 }
 
-export interface ITSQuerySelectionType {
-  name: string;
-  definition: string;
+export interface ITSQuerySelection {
+  [key: string]: string | ITSQuerySelection | ITSQuerySelection[];
 }
 
-export interface ITSQueryDefinition extends ITSTypeEntry {
+export interface ITSQuery extends ITSTypeEntry {
+  index: number;
   name: string;
-  variables: ITSQueryVariableDefinition[];
-  selections: ITSQuerySelectionType;
+  selections: ITSQuerySelection[];
+  variables: ITSQueryVariable[];
 }
 
 export interface ITSQueryTypes {
-  queries: ITSQueryDefinition[];
-  mutations: ITSQueryDefinition[];
+  queries: ITSQuery[];
+  mutations: ITSQuery[];
 }

@@ -1,18 +1,27 @@
-import { ITSQueryDefinition, ITSTypes, ITSInterfaceDefinition } from "../types";
+import {
+  ITSQuery,
+  ITSTypes,
+  ITSInterfaceDefinition,
+  IGQLOperationDefinition,
+  IGQLSelectionSet,
+  IGQLSelection,
+  ITSQuerySelectionSet
+} from "../types";
 import { inspect } from "util";
 import { toTSType, isBuiltIn, getTypeFromNullable } from "../builtinTypes";
 import exception from "../exception";
 
 export default function generateQueryDefinition(
-  def: any,
+  def: IGQLOperationDefinition,
   types: ITSTypes,
   i: number,
   queryType: "query" | "mutation"
-): ITSQueryDefinition {
+): ITSQuery {
+  console.log(inspect(def, undefined, 12));
   const queryName = def.name.value;
   const variables = def.variableDefinitions
-    .filter((x: any) => x.kind === "VariableDefinition")
-    .map((x: any) => {
+    .filter(x => x.kind === "VariableDefinition")
+    .map(x => {
       const name = x.variable.name.value;
       const type = toTSType(x.type, types);
       return x.defaultValue
@@ -29,7 +38,9 @@ export default function generateQueryDefinition(
     ? (() => {
         const selections = createSelections(
           queryName,
-          {},
+          {
+            
+          },
           def.selectionSet,
           tsInterface,
           types
@@ -48,12 +59,12 @@ export default function generateQueryDefinition(
 
 function createSelections(
   queryName: string,
-  outputTSType: any,
-  selectionSet: any,
+  outputTSType: ITSQuerySelectionSet,
+  selectionSet: IGQLSelectionSet,
   currentTSType: ITSInterfaceDefinition,
   types: ITSTypes
-): any {
-  return selectionSet.selections.reduce((acc: any, selection: any) => {
+): ITSQuerySelectionSet {
+  return selectionSet.selections.reduce((acc, selection) => {
     const fieldName = selection.name.value;
     const tsField = currentTSType.fields.find(x => x.name === fieldName);
     return tsField
