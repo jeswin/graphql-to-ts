@@ -95,11 +95,16 @@ export interface IGQLOperationDefinitionNode extends IGQLNamedNode {
   selectionSet: IGQLSelectionSetNode;
 }
 
+export type IGQLDefinition =
+  | IGQLObjectTypeDefinitionNode
+  | IGQLEnumTypeDefinitionNode
+  | IGQLInputObjectTypeDefinitionNode
+  | IGQLOperationDefinitionNode;
+
 export interface IGQLDocumentNode {
   kind: "Document";
-  definitions: IGQLNamedNode[];
+  definitions: IGQLDefinition[];
 }
-
 
 /* TypeScript Types */
 
@@ -116,25 +121,25 @@ export interface ITSField {
   nullable: boolean;
 }
 
-export interface ITSTypeEntry {
+export interface ITSTypeBase {
   index: number;
 }
 
-export interface ITSInterfaceDefinition extends ITSTypeEntry {
+export interface ITSInterfaceDefinition extends ITSTypeBase {
   name: string;
   graphqlType: string;
   extension: boolean;
   fields: ITSField[];
 }
 
-export interface ITSEnumDefinition extends ITSTypeEntry {
+export interface ITSEnum extends ITSTypeBase {
   name: string;
   graphqlType: string;
   values: string[];
 }
 
 export interface ITSTypes {
-  enums: ITSEnumDefinition[];
+  enums: ITSEnum[];
   interfaces: ITSInterfaceDefinition[];
 }
 
@@ -149,14 +154,14 @@ export interface ITSQuerySelection {
   [key: string]: string | ITSQuerySelection;
 }
 
-export interface ITSQuery extends ITSTypeEntry {
+export interface ITSQuery extends ITSTypeBase {
   index: number;
   name: string;
   selections: ITSQuerySelection;
   variables: ITSQueryVariable[];
 }
 
-export interface ITSQueryTypes {
+export interface ITSQueries {
   queries: ITSQuery[];
   mutations: ITSQuery[];
 }

@@ -8,9 +8,10 @@ import getQueryDefintion from "./queryDefinitions/query";
 import {
   IGQLDocumentNode,
   ITSTypes,
-  ITSQueryTypes,
+  ITSQueries,
   ITSQuery,
-  IGQLNamedNode
+  IGQLNamedNode,
+  IGQLDefinition
 } from "./types";
 import { inspect } from "util";
 
@@ -21,7 +22,7 @@ export function getTypes(schema: string): ITSTypes {
 
   return gqlDoc.kind === "Document"
     ? gqlDoc.definitions.reduce(
-        (acc: ITSTypes, def: any, i: number) =>
+        (acc: ITSTypes, def: IGQLDefinition, i: number) =>
           def.kind === "ObjectTypeDefinition" ||
           def.kind === "ObjectTypeExtension"
             ? {
@@ -46,14 +47,14 @@ export function getTypes(schema: string): ITSTypes {
     : exception("Invalid graphql schema. Try validating first.");
 }
 
-export function getQueries(queries: string, schema: string): ITSQueryTypes {
+export function getQueries(queries: string, schema: string): ITSQueries {
   const types = getTypes(schema);
 
   const gqlDoc: IGQLDocumentNode = gql([queries]);
 
   return gqlDoc.kind === "Document"
     ? gqlDoc.definitions.reduce(
-        (acc: ITSQueryTypes, def: any, i: number) =>
+        (acc: ITSQueries, def: IGQLDefinition, i: number) =>
           def.kind === "OperationDefinition"
             ? def.operation === "query"
               ? {

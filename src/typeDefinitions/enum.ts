@@ -1,10 +1,10 @@
-import { IGQLEnumTypeDefinitionNode, ITSEnumDefinition, ITSTypes } from "../types";
+import { IGQLEnumTypeDefinitionNode, ITSEnum, ITSTypes } from "../types";
 
 export default function getEnumType(
   def: IGQLEnumTypeDefinitionNode,
   index: number,
   knownTypes: ITSTypes
-): ITSEnumDefinition {
+): ITSEnum {
   return {
     name: def.name.value,
     graphqlType: def.name.value,
