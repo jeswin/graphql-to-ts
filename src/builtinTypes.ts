@@ -1,16 +1,24 @@
 import exception from "./exception";
-import { ITSTypes, IGQLTypeNode } from "./types";
+import { ITSTypes, IGQLTypeNode, ITSTypeInfo } from "./types";
 
 export function toTSType(
   gqlTypeNode: IGQLTypeNode,
   knownTypes: ITSTypes
-): string {
+): ITSTypeInfo<any> {
   return gqlTypeNode.kind === "NonNullType"
-    ? toTSType(gqlTypeNode.type, knownTypes).replace(/ \| undefined$/, "")
+    ? { ...toTSType(gqlTypeNode.type, knownTypes), nullable: false }
     : gqlTypeNode.kind === "ListType"
-      ? makeNullable(`(${toTSType(gqlTypeNode.type, knownTypes)})[]`)
+      ? {
+          kind: "List",
+          type: toTSType(gqlTypeNode.type, knownTypes),
+          nullable: true
+        }
       : gqlTypeNode.kind === "NamedType"
-        ? makeNullable(getBasicTSType(gqlTypeNode.name.value, knownTypes))
+        ? {
+            kind: "Scalar",
+            type: getBasicTSType(gqlTypeNode.name.value, knownTypes),
+            nullable: true
+          }
         : exception(
             `Unknown type kind ${
               (gqlTypeNode as any).kind
@@ -18,10 +26,6 @@ export function toTSType(
                 : gqlTypeNode
             }`
           );
-}
-
-function makeNullable(type: string) {
-  return !type.endsWith("| undefined") ? `${type} | undefined` : type;
 }
 
 function getBasicTSType(type: string, knownTypes: ITSTypes) {
@@ -50,15 +54,12 @@ function getBasicTSType(type: string, knownTypes: ITSTypes) {
             })();
 }
 
-export function isBuiltIn(maybeNullable: string) {
-  const type = getTypeFromNullable(maybeNullable);
+export function isBuiltIn(type: string) {
   return ["string", "boolean", "number"].includes(type);
 }
 
-export function getTypeFromNullable(maybeNullable: string) {
-  return maybeNullable.replace(/ \| undefined$/, "");
-}
-
-export function isNullable(maybeNullable: string) {
-  return maybeNullable.endsWith("| undefined");
+export function getRootType(type: ITSTypeInfo<any>): string {
+  return type.kind === "Scalar"
+    ? (type.type as string)
+    : getRootType(type.type);
 }

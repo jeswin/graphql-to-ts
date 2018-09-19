@@ -5,9 +5,18 @@ export default {
       graphqlType: "CreateOrRenameUserArgs",
       extension: false,
       fields: [
-        { name: "externalId", nullable: false, type: "string" },
-        { name: "pub", nullable: false, type: "string" },
-        { name: "username", nullable: false, type: "string" }
+        {
+          name: "externalId",
+          type: { kind: "Scalar", type: "string", nullable: false }
+        },
+        {
+          name: "pub",
+          type: { kind: "Scalar", type: "string", nullable: false }
+        },
+        {
+          name: "username",
+          type: { kind: "Scalar", type: "string", nullable: false }
+        }
       ],
       index: 0
     },
@@ -15,21 +24,36 @@ export default {
       name: "ICreateOrRenameUserResult",
       graphqlType: "CreateOrRenameUserResult",
       extension: false,
-      fields: [{ name: "status", nullable: false, type: "string" }],
+      fields: [
+        {
+          name: "status",
+          type: { kind: "Scalar", type: "string", nullable: false }
+        }
+      ],
       index: 1
     },
     {
       name: "IChangeUserStatusArgs",
       graphqlType: "ChangeUserStatusArgs",
       extension: false,
-      fields: [{ name: "externalId", nullable: false, type: "string" }],
+      fields: [
+        {
+          name: "externalId",
+          type: { kind: "Scalar", type: "string", nullable: false }
+        }
+      ],
       index: 2
     },
     {
       name: "IChangeUserStatusResult",
       graphqlType: "ChangeUserStatusResult",
       extension: false,
-      fields: [{ name: "username", nullable: false, type: "string" }],
+      fields: [
+        {
+          name: "username",
+          type: { kind: "Scalar", type: "string", nullable: false }
+        }
+      ],
       index: 3
     },
     {
@@ -41,49 +65,73 @@ export default {
           arguments: [
             {
               name: "input",
-              nullable: true,
-              type: "ICreateOrRenameUserArgs | undefined"
+              type: {
+                kind: "Scalar",
+                type: "ICreateOrRenameUserArgs",
+                nullable: true
+              }
             }
           ],
           name: "createOrRenameUser",
-          nullable: false,
-          type: "ICreateOrRenameUserResult"
+          type: {
+            kind: "Scalar",
+            type: "ICreateOrRenameUserResult",
+            nullable: false
+          }
         },
         {
           arguments: [
             {
               name: "input",
-              nullable: true,
-              type: "IChangeUserStatusArgs | undefined"
+              type: {
+                kind: "Scalar",
+                type: "IChangeUserStatusArgs",
+                nullable: true
+              }
             }
           ],
           name: "enableUser",
-          nullable: false,
-          type: "IChangeUserStatusResult"
+          type: {
+            kind: "Scalar",
+            type: "IChangeUserStatusResult",
+            nullable: false
+          }
         },
         {
           arguments: [
             {
               name: "input",
-              nullable: true,
-              type: "IChangeUserStatusArgs | undefined"
+              type: {
+                kind: "Scalar",
+                type: "IChangeUserStatusArgs",
+                nullable: true
+              }
             }
           ],
           name: "disableUser",
-          nullable: false,
-          type: "IChangeUserStatusResult"
+          type: {
+            kind: "Scalar",
+            type: "IChangeUserStatusResult",
+            nullable: false
+          }
         },
         {
           arguments: [
             {
               name: "input",
-              nullable: true,
-              type: "IChangeUserStatusArgs | undefined"
+              type: {
+                kind: "Scalar",
+                type: "IChangeUserStatusArgs",
+                nullable: true
+              }
             }
           ],
           name: "destroyUser",
-          nullable: false,
-          type: "IChangeUserStatusResult"
+          type: {
+            kind: "Scalar",
+            type: "IChangeUserStatusResult",
+            nullable: false
+          }
         }
       ],
       index: 4

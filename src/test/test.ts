@@ -28,24 +28,60 @@ const generateTypesTests = ([
   ["mutation", "mutation"]
 ] as [string, string][]).map(x => toTestDef(x));
 
+[["generateTypes", generateTypesTests] as [string, TestDef[]]].forEach(
+  ([methodType, testsList]) => {
+    describe(methodType, () => {
+      testsList.forEach(t => {
+        it(t.name, () => {
+          const schema = require(`./${methodType}/${t.dir}/input`).default;
+          const expected = require(`./${methodType}/${t.dir}/expected`).default;
+          const output = lib.getTypes(schema);
+          output.should.deepEqual(expected);
+        });
+      });
+    });
+  }
+);
+
 const generateQueriesTests = ([["query", "query"]] as [string, string][]).map(
   x => toTestDef(x)
 );
 
-[
-  //["generateTypes", generateTypesTests] as [string, TestDef[]],
-  ["generateQueries", generateQueriesTests] as [string, TestDef[]]
-].forEach(([methodType, testsList]) => {
-  describe(methodType, () => {
-    testsList.forEach(t => {
-      it(t.name, () => {
-        const schema = require(`./${methodType}/${t.dir}/input`).schema;
-        const queries = require(`./${methodType}/${t.dir}/input`).queries;
-        const expected = require(`./${methodType}/${t.dir}/expected`).default;
-        const output = lib.getQueries(queries, schema);
-        console.log(inspect(output, undefined, 12));
-        // output.should.deepEqual(expected);
+[["generateQueries", generateQueriesTests] as [string, TestDef[]]].forEach(
+  ([methodType, testsList]) => {
+    describe(methodType, () => {
+      testsList.forEach(t => {
+        it(t.name, () => {
+          const schema = require(`./${methodType}/${t.dir}/input`).schema;
+          const queries = require(`./${methodType}/${t.dir}/input`).queries;
+          const expected = require(`./${methodType}/${t.dir}/expected`).default;
+          const output = lib.getQueries(queries, schema);
+          output.should.deepEqual(expected);
+        });
       });
     });
-  });
-});
+  }
+);
+
+const typeToStringTests = ([
+  ["simple", "simple"],
+  ["nullable", "nullable"],
+  ["simple-list", "simple-list"],
+  ["nullable-list", "nullable-list"],
+  ["nullable-list-nullable", "nullable-list-nullable"]
+] as [string, string][]).map(x => toTestDef(x));
+
+[["typeToString", typeToStringTests] as [string, TestDef[]]].forEach(
+  ([methodType, testsList]) => {
+    describe(methodType, () => {
+      testsList.forEach(t => {
+        it(t.name, () => {
+          const input = require(`./${methodType}/${t.dir}/input`).default;
+          const expected = require(`./${methodType}/${t.dir}/expected`).default;
+          const output = lib.typeToString(input);
+          output.should.deepEqual(expected);
+        });
+      });
+    });
+  }
+);

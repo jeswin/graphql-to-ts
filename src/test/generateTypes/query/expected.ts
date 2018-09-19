@@ -5,17 +5,41 @@ export default {
       graphqlType: "ScuttlespaceUserDTO",
       extension: false,
       fields: [
-        { name: "about", nullable: true, type: "string | undefined" },
-        { name: "domain", nullable: true, type: "string | undefined" },
-        { name: "enabled", nullable: false, type: "boolean" },
-        { name: "externalId", nullable: false, type: "string" },
-        { name: "pub", nullable: false, type: "string" },
-        { name: "rowid", nullable: false, type: "string" },
-        { name: "username", nullable: false, type: "string" },
+        {
+          name: "about",
+          type: { kind: "Scalar", type: "string", nullable: true }
+        },
+        {
+          name: "domain",
+          type: { kind: "Scalar", type: "string", nullable: true }
+        },
+        {
+          name: "enabled",
+          type: { kind: "Scalar", type: "boolean", nullable: false }
+        },
+        {
+          name: "externalId",
+          type: { kind: "Scalar", type: "string", nullable: false }
+        },
+        {
+          name: "pub",
+          type: { kind: "Scalar", type: "string", nullable: false }
+        },
+        {
+          name: "rowid",
+          type: { kind: "Scalar", type: "string", nullable: false }
+        },
+        {
+          name: "username",
+          type: { kind: "Scalar", type: "string", nullable: false }
+        },
         {
           name: "permissions",
-          nullable: true,
-          type: "(IPermissionDTO | undefined)[] | undefined"
+          type: {
+            kind: "List",
+            type: { kind: "Scalar", type: "IPermissionDTO", nullable: true },
+            nullable: true
+          }
         }
       ],
       index: 0
@@ -25,18 +49,30 @@ export default {
       graphqlType: "PermissionDTO",
       extension: false,
       fields: [
-        { name: "rowid", nullable: false, type: "string" },
+        {
+          name: "rowid",
+          type: { kind: "Scalar", type: "string", nullable: false }
+        },
         {
           name: "assigner",
-          nullable: false,
-          type: "IScuttlespaceUserDTO"
+          type: {
+            kind: "Scalar",
+            type: "IScuttlespaceUserDTO",
+            nullable: false
+          }
         },
         {
           name: "assignee",
-          nullable: false,
-          type: "IScuttlespaceUserDTO"
+          type: {
+            kind: "Scalar",
+            type: "IScuttlespaceUserDTO",
+            nullable: false
+          }
         },
-        { name: "permissions", nullable: true, type: "string | undefined" }
+        {
+          name: "permissions",
+          type: { kind: "Scalar", type: "string", nullable: true }
+        }
       ],
       index: 1
     },
@@ -47,13 +83,21 @@ export default {
       fields: [
         {
           arguments: [
-            { name: "domain", nullable: true, type: "string | undefined" },
-            { name: "externalId", nullable: true, type: "string | undefined" },
-            { name: "username", nullable: true, type: "string | undefined" }
+            {
+              name: "domain",
+              type: { kind: "Scalar", type: "string", nullable: true }
+            },
+            {
+              name: "externalId",
+              type: { kind: "Scalar", type: "string", nullable: true }
+            },
+            {
+              name: "username",
+              type: { kind: "Scalar", type: "string", nullable: true }
+            }
           ],
-          nullable: true,
           name: "user",
-          type: "IScuttlespaceUserDTO | undefined"
+          type: { kind: "Scalar", type: "IScuttlespaceUserDTO", nullable: true }
         }
       ],
       index: 2

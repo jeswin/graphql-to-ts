@@ -107,18 +107,28 @@ export interface IGQLDocumentNode {
 }
 
 /* TypeScript Types */
+export interface ITSTypeInfo<T> {
+  kind: "Scalar" | "List";
+  type: T;
+  nullable: boolean;
+}
+export interface ITSScalarTypeInfo extends ITSTypeInfo<string> {
+  kind: "Scalar";
+}
+
+export interface ITSListTypeInfo extends ITSTypeInfo<ITSTypeInfo<any>> {
+  kind: "List";
+}
 
 export interface ITSInputValue {
   name: string;
-  type: string;
-  nullable: boolean;
+  type: ITSTypeInfo<any>;
 }
 
 export interface ITSField {
   name: string;
   arguments?: ITSInputValue[];
-  type: string;
-  nullable: boolean;
+  type: ITSTypeInfo<any>;
 }
 
 export interface ITSTypeBase {
@@ -145,13 +155,12 @@ export interface ITSTypes {
 
 export interface ITSQueryVariable {
   name: string;
-  type: string;
+  type: ITSTypeInfo<any>;
   defaultValue?: string | number | boolean;
-  nullable: boolean;
 }
 
 export interface ITSQuerySelection {
-  [key: string]: string | ITSQuerySelection;
+  [key: string]: ITSTypeInfo<any> | ITSQuerySelection;
 }
 
 export interface ITSQuery extends ITSTypeBase {

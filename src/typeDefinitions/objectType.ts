@@ -1,5 +1,9 @@
 import exception from "../exception";
-import { IGQLObjectTypeDefinitionNode, ITSInterfaceDefinition, ITSTypes } from "../types";
+import {
+  IGQLObjectTypeDefinitionNode,
+  ITSInterfaceDefinition,
+  ITSTypes
+} from "../types";
 import { toTSType } from "../builtinTypes";
 import { inspect } from "util";
 
@@ -16,7 +20,6 @@ export default function getObjectType(
       return field.kind === "FieldDefinition"
         ? (() => {
             const tsType = toTSType(field.type, knownTypes);
-            const nullable = tsType.endsWith(" | undefined");
             const tsName = field.name.value;
             return field.arguments && field.arguments.length
               ? {
@@ -26,11 +29,14 @@ export default function getObjectType(
                           f =>
                             f.kind === "InputValueDefinition"
                               ? (() => {
-                                  const tsFieldType = toTSType(f.type, knownTypes);
+                                  const tsFieldType = toTSType(
+                                    f.type,
+                                    knownTypes
+                                  );
                                   const tsFieldName = f.name.value;
                                   return {
                                     name: tsFieldName,
-                                    nullable: tsFieldType.endsWith(" | undefined"),
+
                                     type: tsFieldType
                                   };
                                 })()
@@ -39,12 +45,10 @@ export default function getObjectType(
                                 )
                         )
                       : undefined,
-                  nullable,
                   name: tsName,
                   type: tsType
                 }
               : {
-                  nullable,
                   name: tsName,
                   type: tsType
                 };

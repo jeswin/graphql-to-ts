@@ -7,13 +7,7 @@ import {
   ITSQuerySelection,
   ITSQueryVariable
 } from "../types";
-import { inspect, isNull } from "util";
-import {
-  toTSType,
-  isBuiltIn,
-  getTypeFromNullable,
-  isNullable
-} from "../builtinTypes";
+import { toTSType, getRootType } from "../builtinTypes";
 import exception from "../exception";
 
 export default function generateQueryDefinition(
@@ -22,7 +16,6 @@ export default function generateQueryDefinition(
   i: number,
   queryType: "query" | "mutation"
 ): ITSQuery {
-  console.log(inspect(def, undefined, 12));
   const queryName = def.name.value;
 
   const variables: ITSQueryVariable[] = def.variableDefinitions
@@ -34,10 +27,9 @@ export default function generateQueryDefinition(
         ? {
             defaultValue: x.defaultValue,
             name,
-            nullable: isNullable(type),
             type
           }
-        : { name, type, nullable: isNullable(type) };
+        : { name, type };
     });
 
   const interfaceName = queryType === "mutation" ? "Mutation" : "Query";
@@ -62,7 +54,7 @@ export default function generateQueryDefinition(
         };
       })()
     : exception(
-        `1: Interface ${interfaceName} referenced in query ${queryName} is missing.`
+        `Interface ${interfaceName} referenced in query ${queryName} is missing.`
       );
 }
 
@@ -80,9 +72,9 @@ function createSelections(
       ? ((acc[fieldName] = !selection.selectionSet
           ? tsField.type
           : (() => {
-              const tsFieldType = getTypeFromNullable(tsField.type);
+              const rootType = getRootType(tsField.type);
               const newCurrentTSType = types.interfaces.find(
-                x => x.name === tsFieldType
+                x => x.name === rootType
               );
               return newCurrentTSType
                 ? createSelections(
@@ -93,12 +85,12 @@ function createSelections(
                     types
                   )
                 : exception(
-                    `3: Interface ${tsFieldType} referenced in query ${queryName} is missing.`
+                    `Interface ${rootType} referenced in query ${queryName} is missing.`
                   );
             })()),
         acc)
       : exception(
-          `2: Interface ${fieldName} referenced in query ${queryName} is missing.`
+          `Interface ${fieldName} referenced in query ${queryName} is missing.`
         );
   }, outputTSType);
 }

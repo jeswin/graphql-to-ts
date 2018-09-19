@@ -4,7 +4,12 @@ export default {
       name: "IChangeUserStatusArgs",
       graphqlType: "ChangeUserStatusArgs",
       extension: false,
-      fields: [{ name: "externalId", nullable: false, type: "string" }],
+      fields: [
+        {
+          name: "externalId",
+          type: { kind: "Scalar", type: "string", nullable: false }
+        }
+      ],
       index: 0
     }
   ],

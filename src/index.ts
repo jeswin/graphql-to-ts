@@ -11,7 +11,8 @@ import {
   ITSQueries,
   ITSQuery,
   IGQLNamedNode,
-  IGQLDefinition
+  IGQLDefinition,
+  ITSTypeInfo
 } from "./types";
 import { inspect } from "util";
 
@@ -75,4 +76,20 @@ export function getQueries(queries: string, schema: string): ITSQueries {
         { queries: [], mutations: [] }
       )
     : exception("Invalid graphql schema. Try validating first.");
+}
+
+export function typeToString(typeInfo: ITSTypeInfo<any>): string {
+  return typeInfo.kind === "Scalar"
+    ? typeInfo.nullable
+      ? `${typeInfo.type} | undefined`
+      : typeInfo.type
+    : typeInfo.kind === "List"
+      ? typeInfo.nullable
+        ? typeInfo.type.nullable
+          ? `(${typeToString(typeInfo.type)})[] | undefined`
+          : `${typeToString(typeInfo.type)}[] | undefined`
+        : typeInfo.type.nullable
+          ? `(${typeToString(typeInfo.type)})[]`
+          : `${typeToString(typeInfo.type)}[]`
+      : exception();
 }
