@@ -12,7 +12,8 @@ import {
   ITSQuery,
   IGQLNamedNode,
   IGQLDefinition,
-  ITSTypeInfo
+  ITSTypeInfo,
+  ITSQuerySelection
 } from "./types";
 import { inspect } from "util";
 
@@ -92,4 +93,25 @@ export function typeToString(typeInfo: ITSTypeInfo<any>): string {
           ? `(${typeToString(typeInfo.type)})[]`
           : `${typeToString(typeInfo.type)}[]`
       : exception();
+}
+
+function isQuerySelection(
+  val: ITSTypeInfo<any> | ITSQuerySelection
+): val is ITSQuerySelection {
+  return !["Scalar", "List"].includes((val as any).kind);
+}
+
+export function selectionTypeToObject(selectionType: ITSQuerySelection): any {
+  return Object.keys(selectionType).reduce(
+    (acc, key) => {
+      const val = selectionType[key];
+      return (
+        (acc[key] = isQuerySelection(val)
+          ? selectionTypeToObject(val)
+          : typeToString(val)),
+        acc
+      );
+    },
+    {} as any
+  );
 }
