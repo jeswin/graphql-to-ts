@@ -1,7 +1,7 @@
 import exception from "../exception";
 import {
   IGQLObjectTypeDefinitionNode,
-  ITSInterfaceDefinition,
+  ITSInterface,
   ITSTypes
 } from "../types";
 import { toTSType } from "../builtinTypes";
@@ -11,7 +11,7 @@ export default function getObjectType(
   def: IGQLObjectTypeDefinitionNode,
   index: number,
   knownTypes: ITSTypes
-): ITSInterfaceDefinition {
+): ITSInterface {
   return {
     name: `I${def.name.value}`,
     graphqlType: def.name.value,

@@ -135,7 +135,7 @@ export interface ITSTypeBase {
   index: number;
 }
 
-export interface ITSInterfaceDefinition extends ITSTypeBase {
+export interface ITSInterface extends ITSTypeBase {
   name: string;
   graphqlType: string;
   extension: boolean;
@@ -150,7 +150,7 @@ export interface ITSEnum extends ITSTypeBase {
 
 export interface ITSTypes {
   enums: ITSEnum[];
-  interfaces: ITSInterfaceDefinition[];
+  interfaces: ITSInterface[];
 }
 
 export interface ITSQueryVariable {

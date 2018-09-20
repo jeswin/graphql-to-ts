@@ -1,7 +1,7 @@
 import {
   ITSQuery,
   ITSTypes,
-  ITSInterfaceDefinition,
+  ITSInterface,
   IGQLOperationDefinitionNode,
   IGQLSelectionSetNode,
   ITSQuerySelection,
@@ -62,7 +62,7 @@ function createSelections(
   queryName: string,
   outputTSType: ITSQuerySelection,
   selectionSet: IGQLSelectionSetNode,
-  currentTSType: ITSInterfaceDefinition,
+  currentTSType: ITSInterface,
   types: ITSTypes
 ): ITSQuerySelection {
   return selectionSet.selections.reduce((acc, selection) => {
