@@ -1,6 +1,6 @@
 {
   "name": "graphql-to-ts",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "author": "Jeswin Kumar<jeswinpk@agilehead.com>",
   "scripts": {
     "test": "./build.sh && mocha dist/test/test.js"
