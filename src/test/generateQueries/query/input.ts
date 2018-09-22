@@ -33,7 +33,7 @@ export const schema = `
 
 export const queries = `
 query User($domain: String!, $externalId: String, $username: String) {
-  user(domain: $domain, externalId: $externalId, username: $username) {
+  user(domainArg: $domain, externalIdArg: $externalId, usernameArg: $username) {
     account {
       name,
       isAdmin

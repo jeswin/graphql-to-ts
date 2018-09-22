@@ -9,13 +9,12 @@ import {
   IGQLDocumentNode,
   ITSTypes,
   ITSQueries,
-  ITSQuery,
-  IGQLNamedNode,
   IGQLDefinition,
   ITSTypeInfo,
-  ITSQuerySelection
+  TSQuerySelection,
+  ITSQuerySelectionCompositeField,
+  ITSQuerySelectionSimpleField
 } from "./types";
-import { inspect } from "util";
 
 export * from "./types";
 
@@ -96,19 +95,18 @@ export function typeToString(typeInfo: ITSTypeInfo<any>): string {
 }
 
 function isQuerySelection(
-  val: ITSTypeInfo<any> | ITSQuerySelection
-): val is ITSQuerySelection {
-  return !["Scalar", "List"].includes((val as any).kind);
+  selection: ITSQuerySelectionSimpleField | ITSQuerySelectionCompositeField
+): selection is ITSQuerySelectionCompositeField {
+  return typeof (selection as any).selections !== "undefined";
 }
 
-export function selectionTypeToObject(selectionType: ITSQuerySelection): any {
-  return Object.keys(selectionType).reduce(
-    (acc, key) => {
-      const val = selectionType[key];
+export function querySelectionsToObject(selections: TSQuerySelection[]): any {
+  return selections.reduce(
+    (acc, selection) => {
       return (
-        (acc[key] = isQuerySelection(val)
-          ? selectionTypeToObject(val)
-          : typeToString(val)),
+        (acc[selection.name] = isQuerySelection(selection)
+          ? querySelectionsToObject([selection])
+          : typeToString(selection.type)),
         acc
       );
     },

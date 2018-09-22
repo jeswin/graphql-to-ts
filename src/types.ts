@@ -77,9 +77,21 @@ export interface IGQLVariableDefinitionNode {
   defaultValue: number | string | boolean;
 }
 
+export interface IGQLVariableNode {
+  kind: "Variable";
+  name: IGQLNameNode;
+}
+
+export interface IGQLArgumentNode {
+  kind: "Argument";
+  name: IGQLNameNode;
+  value: IGQLVariableNode;
+}
+
 export interface IGQLSelectionNode {
   kind: "Field";
   name: IGQLNameNode;
+  arguments?: IGQLArgumentNode[];
   selectionSet?: IGQLSelectionSetNode;
 }
 
@@ -159,14 +171,30 @@ export interface ITSQueryVariable {
   defaultValue?: string | number | boolean;
 }
 
-export interface ITSQuerySelection {
-  [key: string]: ITSTypeInfo<any> | ITSQuerySelection;
+export interface ITSQueryArgument {
+  name: string;
+  value: string;
 }
+
+export interface ITSQuerySelectionSimpleField {
+  name: string;
+  type: ITSTypeInfo<any>;
+}
+
+export interface ITSQuerySelectionCompositeField {
+  name: string;
+  arguments?: ITSQueryArgument[];
+  selections?: TSQuerySelection[];
+}
+
+export type TSQuerySelection =
+  | ITSQuerySelectionSimpleField
+  | ITSQuerySelectionCompositeField;
 
 export interface ITSQuery extends ITSTypeBase {
   index: number;
   name: string;
-  selections: ITSQuerySelection;
+  selections: TSQuerySelection[];
   variables: ITSQueryVariable[];
 }
 

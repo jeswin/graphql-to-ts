@@ -1,16 +1,43 @@
-export default {
+import { ITSQueries } from "../../../types";
+
+const expected: ITSQueries = {
   queries: [
     {
       index: 0,
       name: "User",
-      selections: {
-        user: {
-          account: {
-            name: { kind: "Scalar", type: "string", nullable: false },
-            isAdmin: { kind: "Scalar", type: "boolean", nullable: false }
-          }
+      selections: [
+        {
+          name: "user",
+          arguments: [
+            { name: "domainArg", value: "domain" },
+            { name: "externalIdArg", value: "externalId" },
+            { name: "usernameArg", value: "username" }
+          ],
+          selections: [
+            {
+              name: "account",
+              selections: [
+                {
+                  name: "name",
+                  type: {
+                    kind: "Scalar",
+                    type: "string",
+                    nullable: false
+                  }
+                },
+                {
+                  name: "isAdmin",
+                  type: {
+                    kind: "Scalar",
+                    type: "boolean",
+                    nullable: false
+                  }
+                }
+              ]
+            }
+          ]
         }
-      },
+      ],
       variables: [
         {
           name: "domain",
@@ -29,3 +56,5 @@ export default {
   ],
   mutations: []
 };
+
+export default expected;

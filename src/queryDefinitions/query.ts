@@ -4,11 +4,14 @@ import {
   ITSInterface,
   IGQLOperationDefinitionNode,
   IGQLSelectionSetNode,
-  ITSQuerySelection,
-  ITSQueryVariable
+  TSQuerySelection,
+  ITSQueryVariable,
+  ITSQuerySelectionSimpleField,
+  ITSQuerySelectionCompositeField
 } from "../types";
 import { toTSType, getRootType } from "../builtinTypes";
 import exception from "../exception";
+import { inspect } from "util";
 
 export default function generateQueryDefinition(
   def: IGQLOperationDefinitionNode,
@@ -41,7 +44,7 @@ export default function generateQueryDefinition(
     ? (() => {
         const selections = createSelections(
           queryName,
-          {},
+          [],
           def.selectionSet,
           tsInterface,
           types
@@ -60,35 +63,49 @@ export default function generateQueryDefinition(
 
 function createSelections(
   queryName: string,
-  outputTSType: ITSQuerySelection,
+  outputTSType: TSQuerySelection[],
   selectionSet: IGQLSelectionSetNode,
   currentTSType: ITSInterface,
   types: ITSTypes
-): ITSQuerySelection {
+): TSQuerySelection[] {
   return selectionSet.selections.reduce((acc, selection) => {
     const fieldName: string = selection.name.value;
     const tsField = currentTSType.fields.find(x => x.name === fieldName);
     return tsField
-      ? ((acc[fieldName] = !selection.selectionSet
-          ? tsField.type
-          : (() => {
-              const rootType = getRootType(tsField.type);
-              const newCurrentTSType = types.interfaces.find(
-                x => x.name === rootType
-              );
-              return newCurrentTSType
-                ? createSelections(
-                    queryName,
-                    {},
-                    selection.selectionSet,
-                    newCurrentTSType,
-                    types
-                  )
-                : exception(
-                    `Interface ${rootType} referenced in query ${queryName} is missing.`
+      ? //      ? ((acc[fieldName] = !selection.selectionSet
+        acc.concat(
+          !selection.selectionSet
+            ? ({
+                name: fieldName,
+                type: tsField.type
+              } as ITSQuerySelectionSimpleField)
+            : ({
+                name: fieldName,
+                arguments:
+                  selection.arguments &&
+                  selection.arguments.map(arg => ({
+                    name: arg.name.value,
+                    value: arg.value.name.value
+                  })),
+                selections: (() => {
+                  const rootType = getRootType(tsField.type);
+                  const newCurrentTSType = types.interfaces.find(
+                    x => x.name === rootType
                   );
-            })()),
-        acc)
+                  return newCurrentTSType
+                    ? createSelections(
+                        queryName,
+                        [],
+                        selection.selectionSet,
+                        newCurrentTSType,
+                        types
+                      )
+                    : exception(
+                        `Interface ${rootType} referenced in query ${queryName} is missing.`
+                      );
+                })()
+              } as ITSQuerySelectionCompositeField)
+        )
       : exception(
           `Interface ${fieldName} referenced in query ${queryName} is missing.`
         );
