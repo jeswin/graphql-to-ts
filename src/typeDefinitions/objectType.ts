@@ -1,9 +1,5 @@
 import exception from "../exception";
-import {
-  IGQLObjectTypeDefinitionNode,
-  ITSInterface,
-  ITSTypes
-} from "../types";
+import { IGQLObjectTypeDefinitionNode, ITSInterface, ITSTypes } from "../types";
 import { toTSType } from "../builtinTypes";
 import { inspect } from "util";
 
@@ -36,7 +32,6 @@ export default function getObjectType(
                                   const tsFieldName = f.name.value;
                                   return {
                                     name: tsFieldName,
-
                                     type: tsFieldType
                                   };
                                 })()
@@ -44,12 +39,13 @@ export default function getObjectType(
                                   `Unknown graphql node with kind ${f.kind}.`
                                 )
                         )
-                      : undefined,
+                      : [],
                   name: tsName,
                   type: tsType
                 }
               : {
                   name: tsName,
+                  arguments: [],
                   type: tsType
                 };
           })()

@@ -18,51 +18,50 @@ function toTestDef(item: [string, string] | TestDef): TestDef {
     : item;
 }
 
-// const generateTypesTests = ([
-//   ["objectType", "objectType"],
-//   ["enum", "enum"],
-//   ["input", "input"],
-//   ["types given mixed schema", "genTypesWithMixedSchema"],
-//   ["complex types", "complexTypes"],
-//   ["query", "query"],
-//   ["mutation", "mutation"]
-// ] as [string, string][]).map(x => toTestDef(x));
+const generateTypesTests = ([
+  ["objectType", "objectType"],
+  ["enum", "enum"],
+  ["input", "input"],
+  ["types given mixed schema", "genTypesWithMixedSchema"],
+  ["complex types", "complexTypes"],
+  ["query", "query"],
+  ["mutation", "mutation"]
+] as [string, string][]).map(x => toTestDef(x));
 
-// [["generateTypes", generateTypesTests] as [string, TestDef[]]].forEach(
-//   ([methodType, testsList]) => {
-//     describe(methodType, () => {
-//       testsList.forEach(t => {
-//         it(t.name, () => {
-//           const schema = require(`./${methodType}/${t.dir}/input`).default;
-//           const expected = require(`./${methodType}/${t.dir}/expected`).default;
-//           const output = lib.getTypes(schema);
-//           output.should.deepEqual(expected);
-//         });
-//       });
-//     });
-//   }
-// );
-
-const generateQueriesTests = ([["query", "query"]] as [string, string][]).map(
-  x => toTestDef(x)
-);
-
-[["generateQueries", generateQueriesTests] as [string, TestDef[]]].forEach(
+[["generateTypes", generateTypesTests] as [string, TestDef[]]].forEach(
   ([methodType, testsList]) => {
     describe(methodType, () => {
       testsList.forEach(t => {
         it(t.name, () => {
-          const schema = require(`./${methodType}/${t.dir}/input`).schema;
-          const queries = require(`./${methodType}/${t.dir}/input`).queries;
+          const schema = require(`./${methodType}/${t.dir}/input`).default;
           const expected = require(`./${methodType}/${t.dir}/expected`).default;
-          const output = lib.getQueries(queries, schema);
-          console.log(inspect(output, undefined, 122))
+          const output = lib.getTypes(schema);
           output.should.deepEqual(expected);
         });
       });
     });
   }
 );
+
+// const generateQueriesTests = ([["query", "query"]] as [string, string][]).map(
+//   x => toTestDef(x)
+// );
+
+// [["generateQueries", generateQueriesTests] as [string, TestDef[]]].forEach(
+//   ([methodType, testsList]) => {
+//     describe(methodType, () => {
+//       testsList.forEach(t => {
+//         it(t.name, () => {
+//           const schema = require(`./${methodType}/${t.dir}/input`).schema;
+//           const queries = require(`./${methodType}/${t.dir}/input`).queries;
+//           const expected = require(`./${methodType}/${t.dir}/expected`).default;
+//           const output = lib.getQueries(queries, schema);
+//           output.should.deepEqual(expected);
+//         });
+//       });
+//     });
+//   }
+// );
 
 // const typeToStringTests = ([
 //   ["simple", "simple"],
@@ -100,7 +99,7 @@ const generateQueriesTests = ([["query", "query"]] as [string, string][]).map(
 //       it(t.name, () => {
 //         const input = require(`./${methodType}/${t.dir}/input`).default;
 //         const expected = require(`./${methodType}/${t.dir}/expected`).default;
-//         const output = lib.selectionTypeToObject(input);
+//         const output = lib.querySelectionsToObject(input);
 //         output.should.deepEqual(expected);
 //       });
 //     });

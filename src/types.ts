@@ -183,8 +183,8 @@ export interface ITSQuerySelectionSimpleField {
 
 export interface ITSQuerySelectionCompositeField {
   name: string;
-  arguments?: ITSQueryArgument[];
-  selections?: TSQuerySelection[];
+  arguments: ITSQueryArgument[];
+  selections: TSQuerySelection[];
 }
 
 export type TSQuerySelection =

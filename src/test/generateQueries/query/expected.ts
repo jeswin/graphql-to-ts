@@ -16,6 +16,7 @@ const expected: ITSQueries = {
           selections: [
             {
               name: "account",
+              arguments: [],
               selections: [
                 {
                   name: "name",
