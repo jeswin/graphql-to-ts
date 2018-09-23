@@ -43,65 +43,65 @@ const generateTypesTests = ([
   }
 );
 
-// const generateQueriesTests = ([["query", "query"]] as [string, string][]).map(
-//   x => toTestDef(x)
-// );
+const generateQueriesTests = ([["query", "query"]] as [string, string][]).map(
+  x => toTestDef(x)
+);
 
-// [["generateQueries", generateQueriesTests] as [string, TestDef[]]].forEach(
-//   ([methodType, testsList]) => {
-//     describe(methodType, () => {
-//       testsList.forEach(t => {
-//         it(t.name, () => {
-//           const schema = require(`./${methodType}/${t.dir}/input`).schema;
-//           const queries = require(`./${methodType}/${t.dir}/input`).queries;
-//           const expected = require(`./${methodType}/${t.dir}/expected`).default;
-//           const output = lib.getQueries(queries, schema);
-//           output.should.deepEqual(expected);
-//         });
-//       });
-//     });
-//   }
-// );
+[["generateQueries", generateQueriesTests] as [string, TestDef[]]].forEach(
+  ([methodType, testsList]) => {
+    describe(methodType, () => {
+      testsList.forEach(t => {
+        it(t.name, () => {
+          const schema = require(`./${methodType}/${t.dir}/input`).schema;
+          const queries = require(`./${methodType}/${t.dir}/input`).queries;
+          const expected = require(`./${methodType}/${t.dir}/expected`).default;
+          const output = lib.getQueries(queries, schema);
+          output.should.deepEqual(expected);
+        });
+      });
+    });
+  }
+);
 
-// const typeToStringTests = ([
-//   ["simple", "simple"],
-//   ["nullable", "nullable"],
-//   ["simple-list", "simple-list"],
-//   ["nullable-list", "nullable-list"],
-//   ["nullable-list-nullable", "nullable-list-nullable"]
-// ] as [string, string][]).map(x => toTestDef(x));
+const typeToStringTests = ([
+  ["simple", "simple"],
+  ["nullable", "nullable"],
+  ["simple-list", "simple-list"],
+  ["nullable-list", "nullable-list"],
+  ["nullable-list-nullable", "nullable-list-nullable"]
+] as [string, string][]).map(x => toTestDef(x));
 
-// [["typeToString", typeToStringTests] as [string, TestDef[]]].forEach(
-//   ([methodType, testsList]) => {
-//     describe(methodType, () => {
-//       testsList.forEach(t => {
-//         it(t.name, () => {
-//           const input = require(`./${methodType}/${t.dir}/input`).default;
-//           const expected = require(`./${methodType}/${t.dir}/expected`).default;
-//           const output = lib.typeToString(input);
-//           output.should.deepEqual(expected);
-//         });
-//       });
-//     });
-//   }
-// );
+[["typeToString", typeToStringTests] as [string, TestDef[]]].forEach(
+  ([methodType, testsList]) => {
+    describe(methodType, () => {
+      testsList.forEach(t => {
+        it(t.name, () => {
+          const input = require(`./${methodType}/${t.dir}/input`).default;
+          const expected = require(`./${methodType}/${t.dir}/expected`).default;
+          const output = lib.typeToString(input);
+          output.should.deepEqual(expected);
+        });
+      });
+    });
+  }
+);
 
-// const selectionTypeToObjectTests = ([["simple", "simple"]] as [
-//   string,
-//   string
-// ][]).map(x => toTestDef(x));
+const selectionTypeToObjectTests = ([["simple", "simple"]] as [
+  string,
+  string
+][]).map(x => toTestDef(x));
 
-// [
-//   ["selectionTypeToObject", selectionTypeToObjectTests] as [string, TestDef[]]
-// ].forEach(([methodType, testsList]) => {
-//   describe(methodType, () => {
-//     testsList.forEach(t => {
-//       it(t.name, () => {
-//         const input = require(`./${methodType}/${t.dir}/input`).default;
-//         const expected = require(`./${methodType}/${t.dir}/expected`).default;
-//         const output = lib.querySelectionsToObject(input);
-//         output.should.deepEqual(expected);
-//       });
-//     });
-//   });
-// });
+[
+  ["selectionTypeToObject", selectionTypeToObjectTests] as [string, TestDef[]]
+].forEach(([methodType, testsList]) => {
+  describe(methodType, () => {
+    testsList.forEach(t => {
+      it(t.name, () => {
+        const input = require(`./${methodType}/${t.dir}/input`).default;
+        const expected = require(`./${methodType}/${t.dir}/expected`).default;
+        const output = lib.querySelectionsToObject(input);
+        output.should.deepEqual(expected);
+      });
+    });
+  });
+});

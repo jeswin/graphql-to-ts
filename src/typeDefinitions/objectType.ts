@@ -39,13 +39,12 @@ export default function getObjectType(
                                   `Unknown graphql node with kind ${f.kind}.`
                                 )
                         )
-                      : [],
+                      : undefined,
                   name: tsName,
                   type: tsType
                 }
               : {
                   name: tsName,
-                  arguments: [],
                   type: tsType
                 };
           })()

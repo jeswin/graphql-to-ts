@@ -5,3 +5,5 @@ build.sh
 .gitignore
 static/bundle.js
 static/bundle.js.map
+wireman.json
+wireman.md5

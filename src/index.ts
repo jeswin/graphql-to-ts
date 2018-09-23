@@ -100,16 +100,16 @@ function isQuerySelection(
   return typeof (selection as any).selections !== "undefined";
 }
 
-export function querySelectionsToObject(selections: TSQuerySelection[]): any {
-  return selections.reduce(
-    (acc, selection) => {
-      return (
-        (acc[selection.name] = isQuerySelection(selection)
-          ? querySelectionsToObject([selection])
-          : typeToString(selection.type)),
-        acc
-      );
-    },
-    {} as any
-  );
+export function querySelectionsToObject(selections?: TSQuerySelection[]): any {
+  return selections
+    ? selections.reduce(
+        (acc, selection) => (
+          (acc[selection.name] = isQuerySelection(selection)
+            ? querySelectionsToObject(selection.selections)
+            : typeToString(selection.type)),
+          acc
+        ),
+        {} as any
+      )
+    : {};
 }
