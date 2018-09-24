@@ -67,7 +67,7 @@ function createSelections(
   selectionSet: IGQLSelectionSetNode,
   currentTSType: ITSInterface,
   types: ITSTypes
-): TSQuerySelection[] | undefined {
+): TSQuerySelection[] {
   const result = selectionSet.selections.reduce(
     (acc, selection) => {
       const fieldName: string = selection.name.value;
@@ -77,6 +77,12 @@ function createSelections(
             !selection.selectionSet
               ? ({
                   name: fieldName,
+                  arguments:
+                    selection.arguments &&
+                    selection.arguments.map(arg => ({
+                      name: arg.name.value,
+                      value: arg.value.name.value
+                    })),
                   type: tsField.type
                 } as ITSQuerySelectionSimpleField)
               : ({
@@ -111,5 +117,5 @@ function createSelections(
     },
     [] as TSQuerySelection[]
   );
-  return result.length ? result : undefined;
+  return result;
 }

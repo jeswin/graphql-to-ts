@@ -43,9 +43,10 @@ const generateTypesTests = ([
   }
 );
 
-const generateQueriesTests = ([["query", "query"]] as [string, string][]).map(
-  x => toTestDef(x)
-);
+const generateQueriesTests = ([
+  ["query", "query"],
+  ["mutation", "mutation"]
+] as [string, string][]).map(x => toTestDef(x));
 
 [["generateQueries", generateQueriesTests] as [string, TestDef[]]].forEach(
   ([methodType, testsList]) => {

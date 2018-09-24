@@ -9,9 +9,9 @@ const expected: ITSQueries = {
         {
           name: "user",
           arguments: [
-            { name: "domainArg", value: "domain" },
-            { name: "externalIdArg", value: "externalId" },
-            { name: "usernameArg", value: "username" }
+            { name: "domain", value: "domainArg" },
+            { name: "externalId", value: "externalIdArg" },
+            { name: "username", value: "usernameArg" }
           ],
           selections: [
             {
@@ -20,6 +20,7 @@ const expected: ITSQueries = {
               selections: [
                 {
                   name: "name",
+                  arguments: [],
                   type: {
                     kind: "Scalar",
                     type: "string",
@@ -28,6 +29,7 @@ const expected: ITSQueries = {
                 },
                 {
                   name: "isAdmin",
+                  arguments: [],
                   type: {
                     kind: "Scalar",
                     type: "boolean",
@@ -41,15 +43,15 @@ const expected: ITSQueries = {
       ],
       variables: [
         {
-          name: "domain",
+          name: "domainArg",
           type: { kind: "Scalar", type: "string", nullable: false }
         },
         {
-          name: "externalId",
+          name: "externalIdArg",
           type: { kind: "Scalar", type: "string", nullable: true }
         },
         {
-          name: "username",
+          name: "usernameArg",
           type: { kind: "Scalar", type: "string", nullable: true }
         }
       ]

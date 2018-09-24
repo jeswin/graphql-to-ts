@@ -178,6 +178,7 @@ export interface ITSQueryArgument {
 
 export interface ITSQuerySelectionSimpleField {
   name: string;
+  arguments: ITSQueryArgument[];
   type: ITSTypeInfo<any>;
 }
 

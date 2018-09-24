@@ -29,14 +29,16 @@ export const schema = `
       username: String
     ): ScuttlespaceUser!
   }
+
+  extend type Mutation {
+    addUser(
+      name: String!,
+      location: String!
+    ): Boolean!
+  }
 `;
 
 export const queries = `
-query User($domainArg: String!, $externalIdArg: String, $usernameArg: String) {
-  user(domain: $domainArg, externalId: $externalIdArg, username: $usernameArg) {
-    account {
-      name,
-      isAdmin
-    }
-  }
+mutation AddUser($nameArg: String, $locationArg: String!) {
+  addUser(name: $nameArg, location: $locationArg)
 }`;
