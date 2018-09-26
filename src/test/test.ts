@@ -106,3 +106,26 @@ const selectionTypeToObjectTests = ([["simple", "simple"]] as [
     });
   });
 });
+
+const selectionObjectToTypeStringTests = ([["simple", "simple"]] as [
+  string,
+  string
+][]).map(x => toTestDef(x));
+
+[
+  ["selectionObjectToTypeString", selectionObjectToTypeStringTests] as [
+    string,
+    TestDef[]
+  ]
+].forEach(([methodType, testsList]) => {
+  describe(methodType, () => {
+    testsList.forEach(t => {
+      it(t.name, () => {
+        const input = require(`./${methodType}/${t.dir}/input`).default;
+        const expected = require(`./${methodType}/${t.dir}/expected`).default;
+        const output = lib.selectionObjectToTypeString(input);
+        output.should.deepEqual(expected);
+      });
+    });
+  });
+});

@@ -120,3 +120,23 @@ export function querySelectionsToObject(
       )
     : {};
 }
+
+export function selectionObjectToTypeString(
+  selections?: TSQuerySelection[],
+  useUndefined?: boolean
+): string {
+  const obj = querySelectionsToObject(selections, useUndefined);
+  return selectionObjectToTypeStringImpl(obj);
+}
+
+function selectionObjectToTypeStringImpl(obj: any): string {
+  return typeof obj === "object"
+    ? `
+      {
+        ${Object.keys(obj)
+          .map(k => `${k}: ${selectionObjectToTypeStringImpl(obj[k])}`)
+          .join(",")}
+      }
+    `.trim()
+    : obj;
+}
