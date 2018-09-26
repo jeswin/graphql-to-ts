@@ -1,1 +1,1 @@
-export default "(IFoo | undefined)[]"
+export default "(IFoo | null)[]"

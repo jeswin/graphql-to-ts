@@ -78,19 +78,23 @@ export function getQueries(queries: string, schema: string): ITSQueries {
     : exception("Invalid graphql schema. Try validating first.");
 }
 
-export function typeToString(typeInfo: ITSTypeInfo<any>): string {
+export function typeToString(
+  typeInfo: ITSTypeInfo<any>,
+  useUndefined?: boolean
+): string {
+  const nothingType = useUndefined ? "undefined" : "null";
   return typeInfo.kind === "Scalar"
     ? typeInfo.nullable
-      ? `${typeInfo.type} | undefined`
+      ? `${typeInfo.type} | ${nothingType}`
       : typeInfo.type
     : typeInfo.kind === "List"
       ? typeInfo.nullable
         ? typeInfo.type.nullable
-          ? `(${typeToString(typeInfo.type)})[] | undefined`
-          : `${typeToString(typeInfo.type)}[] | undefined`
+          ? `(${typeToString(typeInfo.type, useUndefined)})[] | ${nothingType}`
+          : `${typeToString(typeInfo.type, useUndefined)}[] | ${nothingType}`
         : typeInfo.type.nullable
-          ? `(${typeToString(typeInfo.type)})[]`
-          : `${typeToString(typeInfo.type)}[]`
+          ? `(${typeToString(typeInfo.type, useUndefined)})[]`
+          : `${typeToString(typeInfo.type, useUndefined)}[]`
       : exception();
 }
 
@@ -100,13 +104,16 @@ function isQuerySelection(
   return typeof (selection as any).selections !== "undefined";
 }
 
-export function querySelectionsToObject(selections?: TSQuerySelection[]): any {
+export function querySelectionsToObject(
+  selections?: TSQuerySelection[],
+  useUndefined?: boolean
+): any {
   return selections
     ? selections.reduce(
         (acc, selection) => (
           (acc[selection.name] = isQuerySelection(selection)
-            ? querySelectionsToObject(selection.selections)
-            : typeToString(selection.type)),
+            ? querySelectionsToObject(selection.selections, useUndefined)
+            : typeToString(selection.type, useUndefined)),
           acc
         ),
         {} as any

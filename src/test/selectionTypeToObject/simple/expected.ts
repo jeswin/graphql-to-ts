@@ -1,5 +1,5 @@
 export default {
   hello: "IFoo",
-  world: { inner: "IBar | undefined" },
+  world: { inner: "IBar | null" },
   outer: "string"
 };
