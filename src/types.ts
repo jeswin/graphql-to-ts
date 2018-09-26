@@ -145,6 +145,7 @@ export interface ITSField {
 
 export interface ITSTypeBase {
   index: number;
+  gql: string;
 }
 
 export interface ITSInterface extends ITSTypeBase {
@@ -197,6 +198,7 @@ export interface ITSQuery extends ITSTypeBase {
   name: string;
   selections: TSQuerySelection[];
   variables: ITSQueryVariable[];
+  gql: string;
 }
 
 export interface ITSQueries {

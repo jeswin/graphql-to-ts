@@ -42,7 +42,9 @@ export default {
           }
         }
       ],
-      index: 0
+      index: 0,
+      gql:
+        "type ScuttlespaceUserDTO {\n  about: String\n  domain: String\n  enabled: Boolean!\n  externalId: String!\n  pub: String!\n  rowid: ID!\n  username: String!\n  permissions: [PermissionDTO]\n}"
     },
     {
       name: "IPermissionDTO",
@@ -74,7 +76,9 @@ export default {
           type: { kind: "Scalar", type: "string", nullable: true }
         }
       ],
-      index: 1
+      index: 1,
+      gql:
+        "type PermissionDTO {\n  rowid: ID!\n  assigner: ScuttlespaceUserDTO!\n  assignee: ScuttlespaceUserDTO!\n  permissions: String\n}"
     },
     {
       name: "IQuery",
@@ -100,7 +104,9 @@ export default {
           type: { kind: "Scalar", type: "IScuttlespaceUserDTO", nullable: true }
         }
       ],
-      index: 2
+      index: 2,
+      gql:
+        "extend type Query {\n  user(domain: String, externalId: String, username: String): ScuttlespaceUserDTO\n}"
     }
   ],
   enums: []

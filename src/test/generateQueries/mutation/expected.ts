@@ -29,7 +29,9 @@ const expected: ITSQueries = {
           name: "locationArg",
           type: { kind: "Scalar", type: "string", nullable: false }
         }
-      ]
+      ],
+      gql:
+        "mutation AddUser($nameArg: String, $locationArg: String!) {\n  addUser(name: $nameArg, location: $locationArg)\n}"
     }
   ]
 };

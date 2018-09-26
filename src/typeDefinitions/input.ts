@@ -5,6 +5,7 @@ import {
   ITSTypes
 } from "../types";
 import { toTSType } from "../builtinTypes";
+const { print } = require("graphql/language/printer");
 
 export default function getInputObjectType(
   def: IGQLInputObjectTypeDefinitionNode,
@@ -26,6 +27,7 @@ export default function getInputObjectType(
           })()
         : exception(`Unknown graphql node with kind ${field.kind}.`);
     }),
-    index
+    index,
+    gql: print(def)
   };
 }

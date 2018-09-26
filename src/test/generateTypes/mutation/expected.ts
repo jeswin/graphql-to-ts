@@ -18,7 +18,9 @@ export default {
           type: { kind: "Scalar", type: "string", nullable: false }
         }
       ],
-      index: 0
+      index: 0,
+      gql:
+        "input CreateOrRenameUserArgs {\n  externalId: String!\n  pub: String!\n  username: String!\n}"
     },
     {
       name: "ICreateOrRenameUserResult",
@@ -30,7 +32,8 @@ export default {
           type: { kind: "Scalar", type: "string", nullable: false }
         }
       ],
-      index: 1
+      index: 1,
+      gql: "type CreateOrRenameUserResult {\n  status: String!\n}"
     },
     {
       name: "IChangeUserStatusArgs",
@@ -42,7 +45,8 @@ export default {
           type: { kind: "Scalar", type: "string", nullable: false }
         }
       ],
-      index: 2
+      index: 2,
+      gql: "input ChangeUserStatusArgs {\n  externalId: String!\n}"
     },
     {
       name: "IChangeUserStatusResult",
@@ -54,7 +58,8 @@ export default {
           type: { kind: "Scalar", type: "string", nullable: false }
         }
       ],
-      index: 3
+      index: 3,
+      gql: "type ChangeUserStatusResult {\n  username: String!\n}"
     },
     {
       name: "IMutation",
@@ -134,7 +139,9 @@ export default {
           }
         }
       ],
-      index: 4
+      index: 4,
+      gql:
+        "extend type Mutation {\n  createOrRenameUser(input: CreateOrRenameUserArgs): CreateOrRenameUserResult!\n  enableUser(input: ChangeUserStatusArgs): ChangeUserStatusResult!\n  disableUser(input: ChangeUserStatusArgs): ChangeUserStatusResult!\n  destroyUser(input: ChangeUserStatusArgs): ChangeUserStatusResult!\n}"
     }
   ],
   enums: []

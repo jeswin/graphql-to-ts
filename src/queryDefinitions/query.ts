@@ -13,6 +13,8 @@ import { toTSType, getRootType } from "../builtinTypes";
 import exception from "../exception";
 import { inspect } from "util";
 
+const { print } = require("graphql/language/printer");
+
 export default function generateQueryDefinition(
   def: IGQLOperationDefinitionNode,
   types: ITSTypes,
@@ -53,7 +55,8 @@ export default function generateQueryDefinition(
               index: i,
               name: queryName,
               selections,
-              variables
+              variables,
+              gql: print(def)
             }
           : exception(`Something must be selected in a query.`);
       })()

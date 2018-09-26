@@ -54,7 +54,9 @@ const expected: ITSQueries = {
           name: "usernameArg",
           type: { kind: "Scalar", type: "string", nullable: true }
         }
-      ]
+      ],
+      gql:
+        "query User($domainArg: String!, $externalIdArg: String, $usernameArg: String) {\n  user(domain: $domainArg, externalId: $externalIdArg, username: $usernameArg) {\n    account {\n      name\n      isAdmin\n    }\n  }\n}"
     }
   ],
   mutations: []

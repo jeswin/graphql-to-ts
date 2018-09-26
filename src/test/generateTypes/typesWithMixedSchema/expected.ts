@@ -46,7 +46,9 @@ export default {
           type: { kind: "Scalar", type: "Status", nullable: true }
         }
       ],
-      index: 1
+      index: 1,
+      gql:
+        "type ScuttlespaceUser {\n  about: String\n  domain: String\n  enabled: Boolean!\n  externalId: String!\n  pub: String!\n  rowid: ID!\n  username: String!\n  permissions: [PermissionDTO]\n  status: Status\n}"
     },
     {
       name: "IQuery",
@@ -64,7 +66,8 @@ export default {
           type: { kind: "Scalar", type: "string", nullable: false }
         }
       ],
-      index: 2
+      index: 2,
+      gql: "extend type Query {\n  user(id: String): String!\n}"
     }
   ],
   enums: [
@@ -72,7 +75,8 @@ export default {
       name: "Status",
       graphqlType: "Status",
       values: ["Active", "Disabled"],
-      index: 0
+      index: 0,
+      gql: "enum Status {\n  Active\n  Disabled\n}"
     }
   ]
 };

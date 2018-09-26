@@ -1,4 +1,5 @@
 import { IGQLEnumTypeDefinitionNode, ITSEnum, ITSTypes } from "../types";
+const { print } = require("graphql/language/printer");
 
 export default function getEnumType(
   def: IGQLEnumTypeDefinitionNode,
@@ -9,6 +10,7 @@ export default function getEnumType(
     name: def.name.value,
     graphqlType: def.name.value,
     values: def.values.map(value => value.name.value),
-    index
+    index,
+    gql: print(def)
   };
 }

@@ -14,7 +14,8 @@ export default {
           type: { kind: "Scalar", type: "boolean", nullable: false }
         }
       ],
-      index: 0
+      index: 0,
+      gql: "type PermissionDTO {\n  resource: String!\n  allow: Boolean!\n}"
     },
     {
       name: "IScuttlespaceUser",
@@ -58,7 +59,9 @@ export default {
           }
         }
       ],
-      index: 1
+      index: 1,
+      gql:
+        "type ScuttlespaceUser {\n  about: String\n  domain: String\n  enabled: Boolean!\n  externalId: String!\n  pub: String!\n  rowid: ID!\n  username: String!\n  permissions: [PermissionDTO]\n}"
     }
   ],
   enums: []

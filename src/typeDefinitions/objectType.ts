@@ -2,6 +2,7 @@ import exception from "../exception";
 import { IGQLObjectTypeDefinitionNode, ITSInterface, ITSTypes } from "../types";
 import { toTSType } from "../builtinTypes";
 import { inspect } from "util";
+const { print } = require("graphql/language/printer");
 
 export default function getObjectType(
   def: IGQLObjectTypeDefinitionNode,
@@ -50,6 +51,7 @@ export default function getObjectType(
           })()
         : exception(`Unknown graphql node with kind ${field.kind}.`);
     }),
-    index
+    index,
+    gql: print(def)
   };
 }

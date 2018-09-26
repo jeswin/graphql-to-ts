@@ -22,7 +22,7 @@ const generateTypesTests = ([
   ["objectType", "objectType"],
   ["enum", "enum"],
   ["input", "input"],
-  ["types given mixed schema", "genTypesWithMixedSchema"],
+  ["types given mixed schema", "typesWithMixedSchema"],
   ["complex types", "complexTypes"],
   ["query", "query"],
   ["mutation", "mutation"]
