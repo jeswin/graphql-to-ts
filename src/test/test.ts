@@ -18,7 +18,7 @@ function toTestDef(item: [string, string] | TestDef): TestDef {
     : item;
 }
 
-const generateTypesTests = ([
+const getTypesTests = ([
   ["objectType", "objectType"],
   ["enum", "enum"],
   ["input", "input"],
@@ -28,7 +28,7 @@ const generateTypesTests = ([
   ["mutation", "mutation"]
 ] as [string, string][]).map(x => toTestDef(x));
 
-[["generateTypes", generateTypesTests] as [string, TestDef[]]].forEach(
+[["getTypes", getTypesTests] as [string, TestDef[]]].forEach(
   ([methodType, testsList]) => {
     describe(methodType, () => {
       testsList.forEach(t => {
@@ -43,12 +43,12 @@ const generateTypesTests = ([
   }
 );
 
-const generateQueriesTests = ([
-  ["query", "query"],
-  ["mutation", "mutation"]
-] as [string, string][]).map(x => toTestDef(x));
+const getQueriesTests = ([["query", "query"], ["mutation", "mutation"]] as [
+  string,
+  string
+][]).map(x => toTestDef(x));
 
-[["generateQueries", generateQueriesTests] as [string, TestDef[]]].forEach(
+[["getQueries", getQueriesTests] as [string, TestDef[]]].forEach(
   ([methodType, testsList]) => {
     describe(methodType, () => {
       testsList.forEach(t => {
@@ -129,3 +129,68 @@ const selectionObjectToTypeStringTests = ([["simple", "simple"]] as [
     });
   });
 });
+
+const generateTypesTests = ([["simple", "simple"]] as [string, string][]).map(
+  x => toTestDef(x)
+);
+
+[["generateTypes", generateTypesTests] as [string, TestDef[]]].forEach(
+  ([methodType, testsList]) => {
+    describe(methodType, () => {
+      testsList.forEach(t => {
+        it(t.name, () => {
+          const input = require(`./${methodType}/${t.dir}/input`).default;
+          const expected = require(`./${methodType}/${t.dir}/expected`).default;
+          const output = lib.generateTypes(input);
+          output.should.deepEqual(expected);
+        });
+      });
+    });
+  }
+);
+
+const generateResolversTests = ([["simple", "simple"]] as [
+  string,
+  string
+][]).map(x => toTestDef(x));
+
+[["generateResolvers", generateResolversTests] as [string, TestDef[]]].forEach(
+  ([methodType, testsList]) => {
+    describe(methodType, () => {
+      testsList.forEach(t => {
+        it(t.name, () => {
+          const input = require(`./${methodType}/${t.dir}/input`).default;
+          const expected = require(`./${methodType}/${t.dir}/expected`).default;
+          const opts = {
+            apiModule: "./api",
+            graphqlModule: "my-graphql-declarations",
+            parseResultFunctionName: "parseResult",
+            parseResultModule: "my-graphql-result-parser"
+          };
+          const output = lib.generateResolvers(input, opts);
+          output.should.deepEqual(expected);
+        });
+      });
+    });
+  }
+);
+
+const generateQueriesTests = ([["simple", "simple"]] as [string, string][]).map(
+  x => toTestDef(x)
+);
+
+[["generateQueries", generateQueriesTests] as [string, TestDef[]]].forEach(
+  ([methodType, testsList]) => {
+    describe(methodType, () => {
+      testsList.forEach(t => {
+        it(t.name, () => {
+          const schema = require(`./${methodType}/${t.dir}/input`).schema;
+          const queries = require(`./${methodType}/${t.dir}/input`).queries;
+          const expected = require(`./${methodType}/${t.dir}/expected`).default;
+          const output = lib.generateQueries(queries, schema);
+          output.should.deepEqual(expected);
+        });
+      });
+    });
+  }
+);

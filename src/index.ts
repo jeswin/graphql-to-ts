@@ -4,6 +4,9 @@ import getObjectType from "./typeDefinitions/objectType";
 import getEnumType from "./typeDefinitions/enum";
 import getInputObjectType from "./typeDefinitions/input";
 import getQueryDefintion from "./queryDefinitions/query";
+export { default as generateTypes } from "./codegen/generateTypes";
+export { default as generateResolvers } from "./codegen/generateResolvers";
+export { default as generateQueries } from "./codegen/generateQueries";
 
 import {
   IGQLDocumentNode,
