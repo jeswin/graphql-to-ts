@@ -175,11 +175,11 @@ const generateResolversTests = ([["simple", "simple"]] as [
   }
 );
 
-const generateQueriesTests = ([["simple", "simple"]] as [string, string][]).map(
+const generateApolloQueriesTests = ([["simple", "simple"]] as [string, string][]).map(
   x => toTestDef(x)
 );
 
-[["generateQueries", generateQueriesTests] as [string, TestDef[]]].forEach(
+[["generateApolloQueries", generateApolloQueriesTests] as [string, TestDef[]]].forEach(
   ([methodType, testsList]) => {
     describe(methodType, () => {
       testsList.forEach(t => {
@@ -187,7 +187,7 @@ const generateQueriesTests = ([["simple", "simple"]] as [string, string][]).map(
           const schema = require(`./${methodType}/${t.dir}/input`).schema;
           const queries = require(`./${methodType}/${t.dir}/input`).queries;
           const expected = require(`./${methodType}/${t.dir}/expected`).default;
-          const output = lib.generateQueries(queries, schema);
+          const output = lib.generateApolloQueries(queries, schema);
           output.should.deepEqual(expected);
         });
       });
