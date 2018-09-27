@@ -15,7 +15,7 @@ export async function invokeGetUser(
 }> {
   try {
     const result = await apolloClient.query({
-      query: gql(invokeGetUserGQL),
+      query: gql(getUserGQL),
       variables: {
         domain,
         externalId,
@@ -39,7 +39,7 @@ export async function invokeCreateOrRenameUser(
 }> {
   try {
     const result = await apolloClient.mutate({
-      mutation: gql(invokeCreateOrRenameUserGQL),
+      mutation: gql(createOrRenameUserGQL),
       variables: {
         args
       }
@@ -61,7 +61,7 @@ export async function invokeDestroyUser(
 }> {
   try {
     const result = await apolloClient.mutate({
-      mutation: gql(invokeDestroyUserGQL),
+      mutation: gql(destroyUserGQL),
       variables: {
         args
       }
@@ -83,7 +83,7 @@ export async function invokeDisableUser(
 }> {
   try {
     const result = await apolloClient.mutate({
-      mutation: gql(invokeDisableUserGQL),
+      mutation: gql(disableUserGQL),
       variables: {
         args
       }
@@ -105,7 +105,7 @@ export async function invokeEnableUser(
 }> {
   try {
     const result = await apolloClient.mutate({
-      mutation: gql(invokeEnableUserGQL),
+      mutation: gql(enableUserGQL),
       variables: {
         args
       }

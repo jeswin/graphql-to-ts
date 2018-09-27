@@ -43,7 +43,7 @@ function generateCode(
           ): Promise<${selectionObjectToTypeString(query.selections)}> {
             try {
               const result = await apolloClient.${apolloClientMethod}({
-                ${type}: gql(${invokeFunctionName}GQL),
+                ${type}: gql(${changeCase.camelCase(query.name)}GQL),
                 variables: {
                   ${apolloClientVariables}
                 }
