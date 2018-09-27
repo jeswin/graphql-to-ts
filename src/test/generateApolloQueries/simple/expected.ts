@@ -1,4 +1,15 @@
 export default `
+import {
+  CreateOrRenameUserStatus,
+  IScuttlespaceUser,
+  IPermission,
+  IQuery,
+  ICreateOrRenameUserArgs,
+  ICreateOrRenameUserResult,
+  IChangeUserStatusArgs,
+  IChangeUserStatusResult,
+  IMutation
+} from "my-gql-types";
 import { ApolloClient } from "apollo-client";
 import gql from "graphql-tag";
 

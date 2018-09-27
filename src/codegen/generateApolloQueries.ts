@@ -1,14 +1,36 @@
 import changeCase = require("change-case");
 import prettier = require("prettier");
-import { getQueries, selectionObjectToTypeString, typeToString } from "..";
+import {
+  getQueries,
+  selectionObjectToTypeString,
+  typeToString,
+  getTypes
+} from "..";
 import { ITSQuery } from "../types";
 
-export default function(queries: string, gqlSchema: string) {
+export interface IGenerateApolloQueriesOpts {
+  graphqlTypesModule: string;
+}
+
+export default function(
+  queries: string,
+  gqlSchema: string,
+  opts: IGenerateApolloQueriesOpts
+) {
   const fixedSchema = gqlSchema
     .replace("extend type Query", "type Query")
     .replace("extend type Mutation", "type Mutation");
 
+  const types = getTypes(gqlSchema);
+  const typeNames = types.enums
+    .map(e => e.name)
+    .concat(types.interfaces.map(e => e.name));
   let output = `
+    ${
+      typeNames.length
+        ? `import { ${typeNames.join(",")} } from "${opts.graphqlTypesModule}";`
+        : ""
+    }
     import { ApolloClient } from "apollo-client";
     import gql from "graphql-tag";
     ${(() => {

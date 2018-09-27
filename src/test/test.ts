@@ -175,22 +175,25 @@ const generateResolversTests = ([["simple", "simple"]] as [
   }
 );
 
-const generateApolloQueriesTests = ([["simple", "simple"]] as [string, string][]).map(
-  x => toTestDef(x)
-);
+const generateApolloQueriesTests = ([["simple", "simple"]] as [
+  string,
+  string
+][]).map(x => toTestDef(x));
 
-[["generateApolloQueries", generateApolloQueriesTests] as [string, TestDef[]]].forEach(
-  ([methodType, testsList]) => {
-    describe(methodType, () => {
-      testsList.forEach(t => {
-        it(t.name, () => {
-          const schema = require(`./${methodType}/${t.dir}/input`).schema;
-          const queries = require(`./${methodType}/${t.dir}/input`).queries;
-          const expected = require(`./${methodType}/${t.dir}/expected`).default;
-          const output = lib.generateApolloQueries(queries, schema);
-          output.should.deepEqual(expected);
+[
+  ["generateApolloQueries", generateApolloQueriesTests] as [string, TestDef[]]
+].forEach(([methodType, testsList]) => {
+  describe(methodType, () => {
+    testsList.forEach(t => {
+      it(t.name, () => {
+        const schema = require(`./${methodType}/${t.dir}/input`).schema;
+        const queries = require(`./${methodType}/${t.dir}/input`).queries;
+        const expected = require(`./${methodType}/${t.dir}/expected`).default;
+        const output = lib.generateApolloQueries(queries, schema, {
+          graphqlTypesModule: "my-gql-types"
         });
+        output.should.deepEqual(expected);
       });
     });
-  }
-);
+  });
+});
